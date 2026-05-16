@@ -400,20 +400,20 @@ window.refreshDemoGrid = function() {
 
     const fireImages = [
         'tower_cam_fire.png',
-        'Fire_at_distance_in_forest_202605161710.jpeg',
-        'Fire_beginning_in_forest_202605161658.jpeg',
-        'Fire_in_dense_forest_202605161649.jpeg',
-        'Small_fire_in_forest_202605161615.jpeg',
-        'Small_fire_in_forest_202605161619.jpeg'
+        'fire_at_distance_in_forest_202605161710.jpeg',
+        'fire_beginning_in_forest_202605161658.jpeg',
+        'fire_in_dense_forest_202605161649.jpeg',
+        'small_fire_in_forest_202605161615.jpeg',
+        'small_fire_in_forest_202605161619.jpeg'
     ];
 
     const normalImages = [
         'tower_cam_normal.png',
-        'Fog_in_dense_forest_202605161620.jpeg',
-        'Fog_in_dense_forest_city_202605161648.jpeg',
-        'Image_vu_distance_forêt_montagne_202605161658.jpeg',
-        'Image_vu_distance_milieu_foret_202605161703.jpeg',
-        'Small_town_in_forest_night_202605161618.jpeg'
+        'fog_in_dense_forest_202605161620.jpeg',
+        'fog_in_dense_forest_city_202605161648.jpeg',
+        'image_vu_distance_foret_montagne_202605161658.jpeg',
+        'image_vu_distance_milieu_foret_202605161703.jpeg',
+        'small_town_in_forest_night_202605161618.jpeg'
     ];
 
     for (let i = 0; i < 6; i++) {
