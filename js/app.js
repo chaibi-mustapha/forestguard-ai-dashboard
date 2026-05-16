@@ -395,23 +395,44 @@ window.refreshDemoGrid = function() {
     grid.innerHTML = '';
     window.DemoState.selectedPreset = null;
 
-    const baseImages = [
-        { src: 'assets/images/tower_cam_normal.png', isFire: false },
-        { src: 'assets/images/tower_cam_fire.png', isFire: true }
+    const firePath = 'assets/demo-scenarios/fire/';
+    const normalPath = 'assets/demo-scenarios/normal/';
+
+    const fireImages = [
+        'tower_cam_fire.png',
+        'Fire_at_distance_in_forest_202605161710.jpeg',
+        'Fire_beginning_in_forest_202605161658.jpeg',
+        'Fire_in_dense_forest_202605161649.jpeg',
+        'Small_fire_in_forest_202605161615.jpeg',
+        'Small_fire_in_forest_202605161619.jpeg'
+    ];
+
+    const normalImages = [
+        'tower_cam_normal.png',
+        'Fog_in_dense_forest_202605161620.jpeg',
+        'Fog_in_dense_forest_city_202605161648.jpeg',
+        'Image_vu_distance_forêt_montagne_202605161658.jpeg',
+        'Image_vu_distance_milieu_foret_202605161703.jpeg',
+        'Small_town_in_forest_night_202605161618.jpeg'
     ];
 
     for (let i = 0; i < 6; i++) {
         const isFire = Math.random() > 0.5;
-        const imgObj = baseImages[isFire ? 1 : 0];
+        const imgName = isFire 
+            ? fireImages[Math.floor(Math.random() * fireImages.length)]
+            : normalImages[Math.floor(Math.random() * normalImages.length)];
+        
+        const imgSrc = (isFire ? firePath : normalPath) + imgName;
         
         const temp = isFire ? Math.floor(Math.random() * 15 + 32) : Math.floor(Math.random() * 15 + 18);
         const wind = Math.floor(Math.random() * 45);
         const hum = isFire ? Math.floor(Math.random() * 20 + 10) : Math.floor(Math.random() * 40 + 35);
 
-        const preset = { id: i, image: imgObj.src, fire: isFire, temp, wind, hum };
+        const preset = { id: i, image: imgSrc, fire: isFire, temp, wind, hum };
 
         const cell = document.createElement('div');
         cell.className = 'demo-cell';
+        cell.dataset.id = i;
         cell.innerHTML = `
             <img src="${preset.image}" alt="Scenario ${i}">
             <div class="demo-cell-info">
@@ -512,18 +533,18 @@ function handleDemoSend() {
  * Mapping for specific station data
  */
 window.StationDataMap = {
-    'A1': { image: 'assets/Reseau Antenne/antenne_1_NonFeut.png', wind: 12, temp: 24, hum: 45, windDir: 'N' },
-    'A2': { image: 'assets/Reseau Antenne/antenne_2_NonFeut.png', wind: 15, temp: 26, hum: 40, windDir: 'NE' },
-    'A3': { image: 'assets/Reseau Antenne/antenne_3_NonFeut.png', wind: 18, temp: 28, hum: 35, windDir: 'NW' },
-    'A4': { image: 'assets/Reseau Antenne/antenne_4_NonFeut.png', wind: 10, temp: 25, hum: 42, windDir: 'N' },
-    'B1': { image: 'assets/Reseau Antenne/antenne_5_NonFeut.png', wind: 14, temp: 27, hum: 38, windDir: 'W' },
-    'B2': { image: 'assets/Reseau Antenne/antenne_6_NonFeut.png', wind: 12, temp: 24, hum: 45, windDir: 'S' },
-    'B3': { image: 'assets/Reseau Antenne/antenne_7_NonFeut.png', wind: 15, temp: 26, hum: 40, windDir: 'SE' },
-    'B4': { image: 'assets/Reseau Antenne/antenne_8_NonFeut.png', wind: 18, temp: 28, hum: 35, windDir: 'E' },
-    'C1': { image: 'assets/Reseau Antenne/antenne_9_NonFeut.png', wind: 10, temp: 25, hum: 42, windDir: 'SW' },
-    'C2': { image: 'assets/Reseau Antenne/antenne_10_NonFeut.png', wind: 14, temp: 27, hum: 38, windDir: 'S' },
-    'C3': { image: 'assets/Reseau Antenne/antenne_11_NonFeut.png', wind: 12, temp: 24, hum: 45, windDir: 'S' },
-    'C4': { image: 'assets/Reseau Antenne/antenne_12_NonFeut.png', wind: 15, temp: 26, hum: 40, windDir: 'SE' }
+    'A1': { image: 'assets/Reseau Antenne/antenne_1.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'N' },
+    'A2': { image: 'assets/Reseau Antenne/antenne_2.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'NE' },
+    'A3': { image: 'assets/Reseau Antenne/antenne_3.jpeg', wind: 18, temp: 28, hum: 35, windDir: 'NW' },
+    'A4': { image: 'assets/Reseau Antenne/antenne_4.jpeg', wind: 10, temp: 25, hum: 42, windDir: 'N' },
+    'B1': { image: 'assets/Reseau Antenne/antenne_5.jpeg', wind: 14, temp: 27, hum: 38, windDir: 'W' },
+    'B2': { image: 'assets/Reseau Antenne/antenne_6.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
+    'B3': { image: 'assets/Reseau Antenne/antenne_7.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'SE' },
+    'B4': { image: 'assets/Reseau Antenne/antenne_8.jpeg', wind: 18, temp: 28, hum: 35, windDir: 'E' },
+    'C1': { image: 'assets/Reseau Antenne/antenne_9.jpeg', wind: 10, temp: 25, hum: 42, windDir: 'SW' },
+    'C2': { image: 'assets/Reseau Antenne/antenne_10.jpeg', wind: 14, temp: 27, hum: 38, windDir: 'S' },
+    'C3': { image: 'assets/Reseau Antenne/antenne_11.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
+    'C4': { image: 'assets/Reseau Antenne/antenne_12.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'SE' }
 };
 
 /**
