@@ -127,25 +127,21 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 15000);
 
+        console.log("Calling HF API:", `https://api-inference.huggingface.co/models/${this.hfModelId}`);
+        console.log("Using Token:", this.hfToken ? (this.hfToken.substring(0, 5) + "...") : "MISSING");
+
         try {
             const response = await fetch(
                 `https://api-inference.huggingface.co/models/${this.hfModelId}`,
                 {
                     method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
                     headers: { 
                         'Authorization': `Bearer ${this.hfToken.trim()}`,
-                        'Content-Type': 'application/json',
-                        'x-use-cache': 'false'
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         inputs: prompt,
-                        parameters: {
-                            max_new_tokens: 300,
-                            temperature: 0.1,
-                            use_cache: false
-                        }
+                        parameters: { max_new_tokens: 300, temperature: 0.1 }
                     }),
                     signal: controller.signal
                 }
