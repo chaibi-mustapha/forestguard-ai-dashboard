@@ -11,9 +11,14 @@ window.GemmaAPI = {
      * Initialize with stored config or defaults
      */
     init() {
+        // Fallback to window.ForestGuardConfig if defined
         const config = window.ForestGuardConfig || {};
+        
+        // Priority: LocalStorage > config.js > Default
         this.hfToken = localStorage.getItem('hf_token') || config.hfToken || null;
         this.hfModelId = localStorage.getItem('hf_model_id') || config.hfModelId || 'chaibi-mustapha/gemma-2-2b-fire-detection';
+        
+        console.log("Gemma API Initialized with Model:", this.hfModelId);
         this.updateStatus();
     },
 
