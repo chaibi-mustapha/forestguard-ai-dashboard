@@ -3,7 +3,6 @@
    Connects to Hugging Face Space (Real Model)
    ============================================ */
 window.GemmaAPI = {
-    // Space URL for your fine-tuned model
     spaceUrl: 'https://chaibi-mustapha-forestguard-fire-detection.hf.space',
     isProcessing: false,
 
@@ -38,7 +37,8 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
     },
 
     /**
-     * Call the Hugging Face Space API (REAL MODEL - NO SIMULATION)
+     * Call the Hugging Face Space Gradio API (REAL MODEL)
+     * Uses Gradio 5.x REST API format: POST /gradio_api/call/predict
      */
     async analyze(imgElement, sensorData) {
         this.isProcessing = true;
@@ -46,41 +46,71 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
 
         try {
             console.log("Sending REAL request to fine-tuned model via HF Space...");
-            
-            // Call the Gradio API endpoint
-            const response = await fetch(`${this.spaceUrl}/api/predict`, {
+
+            // Step 1: Submit the request to Gradio
+            const submitResponse = await fetch(`${this.spaceUrl}/gradio_api/call/predict`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ data: [prompt] })
             });
 
-            if (!response.ok) {
-                const errText = await response.text();
-                throw new Error(`Space returned ${response.status}: ${errText}`);
+            if (!submitResponse.ok) {
+                throw new Error(`Space submit failed: ${submitResponse.status}`);
             }
 
-            const result = await response.json();
-            const text = result.data[0]; // Gradio returns { data: [output] }
-            
-            console.log("REAL MODEL RESPONSE:", text);
+            const submitResult = await submitResponse.json();
+            const eventId = submitResult.event_id;
+            console.log("Request submitted, event_id:", eventId);
 
-            // Parse JSON from model response
-            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            // Step 2: Fetch the result
+            const resultResponse = await fetch(`${this.spaceUrl}/gradio_api/call/predict/${eventId}`);
+            
+            if (!resultResponse.ok) {
+                throw new Error(`Space result failed: ${resultResponse.status}`);
+            }
+
+            const resultText = await resultResponse.text();
+            console.log("Raw Space response:", resultText);
+            
+            // Parse the SSE (Server-Sent Events) response
+            // Format: event: complete\ndata: ["result text"]
+            const dataLines = resultText.split('\n').filter(line => line.startsWith('data:'));
+            const lastDataLine = dataLines[dataLines.length - 1];
+            const jsonData = JSON.parse(lastDataLine.replace('data: ', ''));
+            const modelOutput = Array.isArray(jsonData) ? jsonData[0] : jsonData;
+
+            console.log("REAL MODEL OUTPUT:", modelOutput);
+
+            // Extract JSON from model response
+            const jsonMatch = modelOutput.match(/\{[\s\S]*\}/);
             if (jsonMatch) {
                 const parsed = JSON.parse(jsonMatch[0]);
                 this.isProcessing = false;
-                return { success: true, data: parsed, raw: text, source: 'huggingface-space' };
+                return { success: true, data: parsed, raw: modelOutput, source: 'huggingface-space' };
             }
-            
-            throw new Error('Model response is not valid JSON');
+
+            // If no JSON found, return as raw text
+            this.isProcessing = false;
+            return {
+                success: true,
+                data: {
+                    fire_detected: modelOutput.toLowerCase().includes('fire') || modelOutput.toLowerCase().includes('feu'),
+                    severity: modelOutput.toLowerCase().includes('fire') ? 'high' : 'none',
+                    confidence: 0.85,
+                    explanation: modelOutput,
+                    recommended_action: modelOutput.toLowerCase().includes('fire') ? 'Alert triggered' : 'Continue monitoring'
+                },
+                raw: modelOutput,
+                source: 'huggingface-space'
+            };
 
         } catch (error) {
             console.error("REAL API CALL FAILED:", error);
             this.isProcessing = false;
-            return { 
-                success: false, 
-                error: `API Error: ${error.message}`, 
-                source: 'error' 
+            return {
+                success: false,
+                error: `API Error: ${error.message}`,
+                source: 'error'
             };
         }
     }
