@@ -123,9 +123,9 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
     async callHuggingFaceAPI(imgElement, sensorData) {
         const prompt = this.buildPrompt(sensorData);
         
-        // 15 SECOND TIMEOUT
+        // 60 SECOND TIMEOUT (to handle model cold starts)
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        const timeoutId = setTimeout(() => controller.abort(), 60000);
 
         console.log("Calling HF API:", `https://api-inference.huggingface.co/models/${this.hfModelId}`);
         console.log("Using Token:", this.hfToken ? (this.hfToken.substring(0, 5) + "...") : "MISSING");
