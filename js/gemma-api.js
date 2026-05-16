@@ -1,81 +1,85 @@
 /* ============================================
    Gemma 4 API Integration
-   Direct Connection to Hugging Face
+   Connects to Hugging Face Space (Real Model)
    ============================================ */
 window.GemmaAPI = {
-    hfToken: null,
-    hfModelId: 'chaibi-mustapha/gemma-2-2b-fire-detection',
+    // Space URL for your fine-tuned model
+    spaceUrl: 'https://chaibi-mustapha-forestguard-fire-detection.hf.space',
     isProcessing: false,
 
     init() {
-        const config = window.ForestGuardConfig || {};
-        this.hfToken = localStorage.getItem('hf_token') || config.hfToken || null;
-        this.hfModelId = localStorage.getItem('hf_model_id') || config.hfModelId || 'chaibi-mustapha/gemma-2-2b-fire-detection';
-        console.log("Gemma API Initialized with Model:", this.hfModelId);
+        console.log("Gemma API Initialized - Connecting to HF Space:", this.spaceUrl);
     },
 
     buildPrompt(sensorData) {
-        return `Analyze this forest surveillance data and image. 
-Context: Temp ${sensorData.temperature}°C, Humidity ${sensorData.humidity}%, Wind ${sensorData.windSpeed}km/h.
-Is there a fire or smoke? Respond in JSON format:
+        return `You are an AI agent specialized in forest fire detection, deployed on a surveillance tower. Analyze the image from the forest surveillance camera.
+
+Real-time sensor context:
+- Wind: ${sensorData.windSpeed} km/h direction ${sensorData.windDir}
+- Temperature: ${sensorData.temperature}°C
+- Humidity: ${sensorData.humidity}%
+- Air Quality (AQI): ${sensorData.aqi}
+
+Provide your analysis in this EXACT JSON format:
 {
-  "fire_detected": boolean,
-  "severity": "none"|"low"|"medium"|"high"|"critical",
-  "confidence": number,
-  "explanation": "short explanation",
-  "recommended_action": "action"
-}`;
+  "fire_detected": true/false,
+  "smoke_detected": true/false,
+  "severity": "none" | "low" | "medium" | "high" | "critical",
+  "confidence": 0.0-1.0,
+  "threat_type": "none" | "smoke" | "flames" | "both",
+  "estimated_distance_km": number,
+  "direction": "N" | "NE" | "E" | "SE" | "S" | "SW" | "W" | "NW",
+  "risk_factors": ["list of risk factors"],
+  "recommended_action": "description of recommended action",
+  "explanation": "detailed explanation of your analysis"
+}
+
+Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflections. Be precise and factual.`;
     },
 
+    /**
+     * Call the Hugging Face Space API (REAL MODEL - NO SIMULATION)
+     */
     async analyze(imgElement, sensorData) {
-        if (!this.hfToken) {
-            return { success: false, error: "Hugging Face Token is missing. Please check settings.", source: 'error' };
-        }
-
         this.isProcessing = true;
         const prompt = this.buildPrompt(sensorData);
 
         try {
-            console.log("Attempting REAL API call to:", this.hfModelId);
+            console.log("Sending REAL request to fine-tuned model via HF Space...");
             
-            const response = await fetch(
-                `https://api-inference.huggingface.co/models/${this.hfModelId.trim()}`,
-                {
-                    method: 'POST',
-                    headers: { 
-                        'Authorization': `Bearer ${this.hfToken.trim()}`,
-                        'Content-Type': 'application/json',
-                        'x-wait-for-model': 'true'
-                    },
-                    body: JSON.stringify({
-                        inputs: prompt,
-                        parameters: { max_new_tokens: 250, temperature: 0.1 }
-                    })
-                }
-            );
+            // Call the Gradio API endpoint
+            const response = await fetch(`${this.spaceUrl}/api/predict`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: [prompt] })
+            });
 
             if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || `Server returned ${response.status}`);
+                const errText = await response.text();
+                throw new Error(`Space returned ${response.status}: ${errText}`);
             }
 
-            const data = await response.json();
-            const text = Array.isArray(data) ? data[0].generated_text : (data.generated_text || JSON.stringify(data));
+            const result = await response.json();
+            const text = result.data[0]; // Gradio returns { data: [output] }
             
-            // Extract JSON from response
+            console.log("REAL MODEL RESPONSE:", text);
+
+            // Parse JSON from model response
             const jsonMatch = text.match(/\{[\s\S]*\}/);
-            const result = jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(text);
+            if (jsonMatch) {
+                const parsed = JSON.parse(jsonMatch[0]);
+                this.isProcessing = false;
+                return { success: true, data: parsed, raw: text, source: 'huggingface-space' };
+            }
             
-            this.isProcessing = false;
-            return { success: true, data: result, source: 'huggingface' };
+            throw new Error('Model response is not valid JSON');
 
         } catch (error) {
             console.error("REAL API CALL FAILED:", error);
             this.isProcessing = false;
-            // WE SHOW THE REAL ERROR TO THE USER - NO SIMULATION
             return { 
                 success: false, 
-                error: `REAL API ERROR: ${error.message}. Ensure your token is valid and model is public.`, 
+                error: `API Error: ${error.message}`, 
                 source: 'error' 
             };
         }
