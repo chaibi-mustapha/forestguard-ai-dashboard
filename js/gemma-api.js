@@ -137,11 +137,16 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
                     method: 'POST',
                     headers: { 
                         'Authorization': `Bearer ${this.hfToken.trim()}`,
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'x-wait-for-model': 'true'
                     },
                     body: JSON.stringify({
                         inputs: prompt,
-                        parameters: { max_new_tokens: 300, temperature: 0.1 }
+                        parameters: { 
+                            max_new_tokens: 300, 
+                            temperature: 0.1,
+                            return_full_text: false
+                        }
                     }),
                     signal: controller.signal
                 }
