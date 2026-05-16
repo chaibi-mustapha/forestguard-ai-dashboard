@@ -8,7 +8,7 @@ window.ForestGuardConfig = {
     hfModelId: 'chaibi-mustapha/gemma-2-2b-fire-detection',
     
     // Your Hugging Face Token (API Read Token)
-    hfToken: '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',
+    hfToken: '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',
     
     // Default parameters
     defaultStation: 'A3',
