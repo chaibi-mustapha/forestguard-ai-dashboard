@@ -2,15 +2,15 @@
     <!-- Shield with beautiful orange-red gradient -->
     <path d="M256 32L64 96V224C64 352 160 448 256 480C352 448 448 352 448 224V96L256 32Z" fill="url(#logoGrad)"/>
     
-    <!-- Forest (Three Spaced Pine Trees — Emerald Green) -->
-    <!-- Left Tree (Background — Emerald Green with opacity) -->
-    <path d="M144 192L120 272H131.2L104 336H136V368H152V336H184L156.8 272H168L144 192Z" fill="#10B981" fill-opacity="0.8"/>
+    <!-- Forest (Three Spaced Pine Trees — Pure White) -->
+    <!-- Left Tree (Background — White with opacity) -->
+    <path d="M144 192L120 272H131.2L104 336H136V368H152V336H184L156.8 272H168L144 192Z" fill="#FFFFFF" fill-opacity="0.8"/>
     
-    <!-- Right Tree (Background — Emerald Green with opacity) -->
-    <path d="M368 192L392 272H380.8L408 336H376V368H360V336H328L355.2 272H344L368 192Z" fill="#10B981" fill-opacity="0.8"/>
+    <!-- Right Tree (Background — White with opacity) -->
+    <path d="M368 192L392 272H380.8L408 336H376V368H360V336H328L355.2 272H344L368 192Z" fill="#FFFFFF" fill-opacity="0.8"/>
     
-    <!-- Center Tree (Foreground / Taller — Solid Emerald Green) -->
-    <path d="M256 112L224 208H236.8L208 336H243.2V384H268.8V336H304L275.2 208H288L256 112Z" fill="#10B981"/>
+    <!-- Center Tree (Foreground / Taller — Solid White) -->
+    <path d="M256 112L224 208H236.8L208 336H243.2V384H268.8V336H304L275.2 208H288L256 112Z" fill="#FFFFFF"/>
 
     <!-- Gradient definitions -->
     <defs>
