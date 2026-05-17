@@ -89,10 +89,12 @@ function setupEventListeners() {
             
             const hfTokenInput = document.getElementById('hf-token-input');
             const hfModelInput = document.getElementById('hf-model-input');
+            const colabUrlInput = document.getElementById('colab-url-input');
 
             // Set current values
             if (hfTokenInput && GemmaAPI.hfToken) hfTokenInput.value = GemmaAPI.hfToken;
             if (hfModelInput && GemmaAPI.hfModelId) hfModelInput.value = GemmaAPI.hfModelId;
+            if (colabUrlInput && GemmaAPI.colabUrl) colabUrlInput.value = GemmaAPI.colabUrl;
         });
     }
 
@@ -107,23 +109,45 @@ function setupEventListeners() {
     }
 
     if (btnSaveSettings) {
-        btnSaveSettings.addEventListener('click', () => {
+        btnSaveSettings.addEventListener('click', async () => {
+            const colabUrl = document.getElementById('colab-url-input')?.value.trim();
             const hfToken = document.getElementById('hf-token-input')?.value.trim();
             const hfModelId = document.getElementById('hf-model-input')?.value.trim();
 
-            if (!hfToken || !hfModelId) {
-                return alert('Please fill in the Hugging Face fields');
+            // Save Colab URL
+            if (colabUrl) {
+                GemmaAPI.setColabUrl(colabUrl);
+                
+                // Test Colab connection
+                const statusIcon = document.getElementById('colab-status-icon');
+                const statusText = document.getElementById('colab-status-text');
+                if (statusIcon) statusIcon.textContent = '🟡';
+                if (statusText) statusText.textContent = 'Testing connection...';
+
+                try {
+                    const res = await fetch(colabUrl.replace(/\/+$/, '') + '/', { method: 'GET' });
+                    const data = await res.json();
+                    if (data.status === 'online') {
+                        if (statusIcon) statusIcon.textContent = '🟢';
+                        if (statusText) statusText.textContent = `Connected! GPU: ${data.device}`;
+                    }
+                } catch (e) {
+                    if (statusIcon) statusIcon.textContent = '🔴';
+                    if (statusText) statusText.textContent = `Connection failed: ${e.message}`;
+                }
+            } else {
+                GemmaAPI.setColabUrl('');
             }
 
-            GemmaAPI.saveConfig({ hfToken, hfModelId });
-            settingsModal.style.display = 'none';
-            
-            UIManager.addLogEntry(
-                new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-                `🧠 Gemma 2 Model Configured`,
-                'System',
-                `Mode: Hugging Face — OK`
-            );
+            // Save HF settings
+            if (hfToken) localStorage.setItem('hf_token', hfToken);
+            if (hfModelId) localStorage.setItem('hf_model_id', hfModelId);
+
+            const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            const source = colabUrl ? 'Colab GPU' : 'HF Space';
+            UIManager.addLogEntry(now, `🧠 AI Backend Configured`, 'System', `Mode: ${source} — OK`);
+
+            if (!colabUrl) settingsModal.style.display = 'none';
         });
     }
 
