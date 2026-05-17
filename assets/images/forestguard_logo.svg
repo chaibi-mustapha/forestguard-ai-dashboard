@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Shield with beautiful orange-red gradient -->
+    <path d="M256 32L64 96V224C64 352 160 448 256 480C352 448 448 352 448 224V96L256 32Z" fill="url(#logoGrad)"/>
+    
+    <!-- Forest (Three High-Resolution Layered Pine Trees) -->
+    <!-- Left Tree (Background — Silver/Slate with opacity) -->
+    <path d="M160 208L120 280H140.8L104 344H152V368H168V344H216L179.2 280H200L160 208Z" fill="#E2E8F0" fill-opacity="0.85"/>
+    
+    <!-- Right Tree (Background — Silver/Slate with opacity) -->
+    <path d="M352 208L312 280H332.8L296 344H344V368H360V344H408L371.2 280H392L352 208Z" fill="#E2E8F0" fill-opacity="0.85"/>
+    
+    <!-- Center Tree (Foreground / Taller — Solid Crisp White) -->
+    <path d="M256 112L192 208H232L160 336H240V384H272V336H352L280 208H320L256 112Z" fill="#FFFFFF"/>
+
+    <!-- Gradient definitions -->
+    <defs>
+        <linearGradient id="logoGrad" x1="64" y1="32" x2="448" y2="480" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF6B35"/>
+            <stop offset="1" stop-color="#F72C1B"/>
+        </linearGradient>
+    </defs>
+</svg>
