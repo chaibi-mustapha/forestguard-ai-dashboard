@@ -126,6 +126,9 @@ window.UIManager = {
         setText('s-air-aqi', `AQI: ${data.aqi}`);
         setText('s-battery', `${data.battery}%`);
         setText('s-signal', data.signalStrength);
+
+        // Update the camera view wind overlay to match the active sensor data perfectly!
+        setText('cam-wind', `Wind: ${data.windDir} ${data.windSpeed} km/h`);
     },
 
     setAlertStatus(level, title, description, showAction) {
@@ -251,6 +254,12 @@ window.UIManager = {
         } else {
             statusInd?.classList.remove('danger'); dot?.classList.remove('danger');
             if (statusText) { statusText.textContent = 'SYSTEM ACTIVE'; statusText.style.color = ''; }
+        }
+
+        // Keep header alert counter perfectly synchronized!
+        const alertCountEl = document.getElementById('alerts-count');
+        if (alertCountEl) {
+            alertCountEl.textContent = active ? '1' : '0';
         }
     },
 
