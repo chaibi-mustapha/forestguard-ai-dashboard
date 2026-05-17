@@ -137,6 +137,13 @@ window.MapManager = {
                 offset: [0, -16]
             });
 
+            // Click handler to select the station
+            marker.on('click', () => {
+                if (typeof window.handleStationClick === 'function') {
+                    window.handleStationClick(s.id);
+                }
+            });
+
             // Add a label
             const label = L.marker([s.lat, s.lng], {
                 icon: L.divIcon({
