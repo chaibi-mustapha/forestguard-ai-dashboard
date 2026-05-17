@@ -125,15 +125,19 @@ function setupEventListeners() {
                 if (statusText) statusText.textContent = 'Testing connection...';
 
                 try {
-                    const res = await fetch(colabUrl.replace(/\/+$/, '') + '/', { method: 'GET' });
-                    const data = await res.json();
-                    if (data.status === 'online') {
+                    // Test Gradio API availability
+                    const res = await fetch(colabUrl.replace(/\/+$/, '') + '/gradio_api/info', { method: 'GET' });
+                    if (res.ok) {
                         if (statusIcon) statusIcon.textContent = '🟢';
-                        if (statusText) statusText.textContent = `Connected! GPU: ${data.device}`;
+                        if (statusText) statusText.textContent = 'Connected! Gradio API ready';
+                    } else {
+                        if (statusIcon) statusIcon.textContent = '🟡';
+                        if (statusText) statusText.textContent = 'URL saved (verify manually)';
                     }
                 } catch (e) {
-                    if (statusIcon) statusIcon.textContent = '🔴';
-                    if (statusText) statusText.textContent = `Connection failed: ${e.message}`;
+                    // CORS may block the test but the API still works
+                    if (statusIcon) statusIcon.textContent = '🟡';
+                    if (statusText) statusText.textContent = 'URL saved — will test on first analysis';
                 }
             } else {
                 GemmaAPI.setColabUrl('');

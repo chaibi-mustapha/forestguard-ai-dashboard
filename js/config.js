@@ -1,17 +1,15 @@
 /**
  * Global Configuration for ForestGuard AI
- * WARNING: If you host this site publicly (e.g., GitHub Pages),
- * be aware that your Hugging Face Token will be visible in the source code.
+ * No hardcoded secrets to prevent GitHub Pages security blocks.
  */
 window.ForestGuardConfig = {
     // Model address on Hugging Face
     hfModelId: 'chaibi-mustapha/gemma-4-e4b-fire-detection',
     
-    // Your Hugging Face Token (API Read Token)
-    hfToken: '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',
+    // Left empty for security — enter yours in the dashboard Settings (⚙️)
+    hfToken: '',
 
-    // Colab GPU Backend URL (paste your ngrok URL here after starting Colab)
-    // Example: 'https://xxxx-xx-xx-xxx-xx.ngrok-free.app'
+    // Colab GPU Backend URL (paste your ngrok or gradio URL here)
     colabApiUrl: '',
 
     // Default parameters

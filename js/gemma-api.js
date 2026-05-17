@@ -1,6 +1,6 @@
 /* ============================================
    Gemma 4 API Integration
-   Connects to Colab GPU Backend or HF Space
+   Connects to Colab GPU (Gradio) or HF Space
    ============================================ */
 window.GemmaAPI = {
     colabUrl: '',
@@ -20,7 +20,7 @@ window.GemmaAPI = {
     },
 
     /**
-     * Save the Colab URL from the settings modal
+     * Save the Colab Gradio URL from the settings modal
      */
     setColabUrl(url) {
         this.colabUrl = url.replace(/\/+$/, ''); // remove trailing slash
@@ -55,7 +55,7 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
     },
 
     /**
-     * Convert an image element to base64
+     * Convert an image element to base64 data URL
      */
     imageToBase64(imgElement) {
         const canvas = document.createElement('canvas');
@@ -63,8 +63,7 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         canvas.height = imgElement.naturalHeight || imgElement.height || 512;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
-        // Return only the base64 data (no prefix)
-        return canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
+        return canvas.toDataURL('image/jpeg', 0.8);
     },
 
     /**
@@ -99,63 +98,78 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
     },
 
     /**
-     * Call the Colab GPU backend (Flask + ngrok)
-     * Sends base64 image + prompt → gets instant AI response
+     * Call the Colab GPU backend via Gradio API
+     * Gradio 5.x REST API: POST /gradio_api/call/predict → GET /gradio_api/call/predict/{event_id}
      */
     async analyzeViaColab(imgElement, sensorData) {
-        console.log("🚀 Sending request to Colab GPU backend...");
+        console.log("🚀 Sending request to Colab GPU (Gradio)...");
         const prompt = this.buildPrompt(sensorData);
-        const imageBase64 = this.imageToBase64(imgElement);
+        const imageDataUrl = this.imageToBase64(imgElement);
 
-        const response = await fetch(`${this.colabUrl}/analyze`, {
+        // Step 1: Submit request to Gradio
+        const submitResponse = await fetch(`${this.colabUrl}/gradio_api/call/predict`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                image: imageBase64,
-                prompt: prompt,
-                sensorData: {
-                    temperature: sensorData.temperature,
-                    humidity: sensorData.humidity,
-                    windSpeed: sensorData.windSpeed,
-                    windDirection: sensorData.windDir
-                }
+                data: [
+                    { "path": imageDataUrl, "meta": { "_type": "gradio.FileData" } },
+                    prompt
+                ]
+            })
+        });
+
+        if (!submitResponse.ok) {
+            // Try alternative Gradio API format (older versions)
+            return await this.analyzeViaColabLegacy(imgElement, sensorData);
+        }
+
+        const submitResult = await submitResponse.json();
+        const eventId = submitResult.event_id;
+        console.log("Colab request submitted, event_id:", eventId);
+
+        // Step 2: Fetch the result
+        const resultResponse = await fetch(`${this.colabUrl}/gradio_api/call/predict/${eventId}`);
+        if (!resultResponse.ok) {
+            throw new Error(`Colab result fetch failed: ${resultResponse.status}`);
+        }
+
+        const resultText = await resultResponse.text();
+        console.log("Raw Colab response:", resultText);
+
+        // Parse the SSE response
+        const dataLines = resultText.split('\n').filter(line => line.startsWith('data:'));
+        const lastDataLine = dataLines[dataLines.length - 1];
+        const jsonData = JSON.parse(lastDataLine.replace('data: ', ''));
+        const modelOutput = Array.isArray(jsonData) ? jsonData[0] : jsonData;
+
+        console.log("✅ Colab GPU response:", modelOutput);
+        return this.parseModelOutput(modelOutput, 'colab-gpu');
+    },
+
+    /**
+     * Legacy Gradio API format fallback (for older Gradio versions)
+     */
+    async analyzeViaColabLegacy(imgElement, sensorData) {
+        console.log("Trying legacy Gradio API format...");
+        const prompt = this.buildPrompt(sensorData);
+        const imageDataUrl = this.imageToBase64(imgElement);
+
+        const response = await fetch(`${this.colabUrl}/api/predict`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                data: [imageDataUrl, prompt]
             })
         });
 
         if (!response.ok) {
-            throw new Error(`Colab API error: ${response.status}`);
+            throw new Error(`Legacy Gradio API failed: ${response.status}`);
         }
 
         const result = await response.json();
-        console.log("✅ Colab GPU response:", result);
-
-        if (!result.success) {
-            throw new Error(result.error || 'Unknown Colab error');
-        }
-
-        // Try to parse JSON from model output
-        const modelOutput = result.response;
-        const jsonMatch = modelOutput.match(/\{[\s\S]*\}/);
-        if (jsonMatch) {
-            try {
-                const parsed = JSON.parse(jsonMatch[0]);
-                return { success: true, data: parsed, raw: modelOutput, source: 'colab-gpu' };
-            } catch (e) { /* fall through to raw response */ }
-        }
-
-        // Return raw text response
-        return {
-            success: true,
-            data: {
-                fire_detected: modelOutput.toLowerCase().includes('fire'),
-                severity: modelOutput.toLowerCase().includes('fire') ? 'high' : 'none',
-                confidence: 0.90,
-                explanation: modelOutput,
-                recommended_action: modelOutput.toLowerCase().includes('fire') ? 'Alert triggered' : 'Continue monitoring'
-            },
-            raw: modelOutput,
-            source: 'colab-gpu'
-        };
+        const modelOutput = Array.isArray(result.data) ? result.data[0] : result.data;
+        console.log("✅ Colab GPU (legacy) response:", modelOutput);
+        return this.parseModelOutput(modelOutput, 'colab-gpu');
     },
 
     /**
@@ -189,23 +203,36 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         const jsonData = JSON.parse(lastDataLine.replace('data: ', ''));
         const modelOutput = Array.isArray(jsonData) ? jsonData[0] : jsonData;
 
+        return this.parseModelOutput(modelOutput, 'huggingface-space');
+    },
+
+    /**
+     * Parse the model output into a standardized result
+     */
+    parseModelOutput(modelOutput, source) {
+        // Try to extract JSON from model response
         const jsonMatch = modelOutput.match(/\{[\s\S]*\}/);
         if (jsonMatch) {
-            const parsed = JSON.parse(jsonMatch[0]);
-            return { success: true, data: parsed, raw: modelOutput, source: 'huggingface-space' };
+            try {
+                const parsed = JSON.parse(jsonMatch[0]);
+                return { success: true, data: parsed, raw: modelOutput, source };
+            } catch (e) { /* fall through */ }
         }
 
+        // Return raw text response with inferred data
         return {
             success: true,
             data: {
-                fire_detected: modelOutput.toLowerCase().includes('fire'),
-                severity: modelOutput.toLowerCase().includes('fire') ? 'high' : 'none',
+                fire_detected: modelOutput.toLowerCase().includes('fire') && !modelOutput.toLowerCase().includes('no fire'),
+                severity: modelOutput.toLowerCase().includes('critical') ? 'critical' :
+                         modelOutput.toLowerCase().includes('high') ? 'high' :
+                         modelOutput.toLowerCase().includes('medium') ? 'medium' : 'none',
                 confidence: 0.85,
                 explanation: modelOutput,
-                recommended_action: modelOutput.toLowerCase().includes('fire') ? 'Alert triggered' : 'Continue monitoring'
+                recommended_action: modelOutput.toLowerCase().includes('fire') ? 'Alert triggered — dispatch team' : 'Continue monitoring'
             },
             raw: modelOutput,
-            source: 'huggingface-space'
+            source
         };
     }
 };
