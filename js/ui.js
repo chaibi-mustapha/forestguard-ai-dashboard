@@ -178,8 +178,8 @@ window.UIManager = {
         }
 
         const d = response.data;
-        let sourceLabel = '🧠 Gemma 2 (Edge AI)';
-        if (response.source === 'huggingface') sourceLabel = '🧠 Gemma 2 (HF)';
+        let sourceLabel = '🧠 Gemma 4 (Edge AI)';
+        if (response.source === 'huggingface') sourceLabel = '🧠 Gemma 4 (HF)';
         
         const severityMap = { 'none': 'tag-safe', 'low': 'tag-safe', 'medium': 'tag-warning', 'high': 'tag-fire', 'critical': 'tag-fire' };
         const tag = severityMap[d.severity] || 'tag-safe';
