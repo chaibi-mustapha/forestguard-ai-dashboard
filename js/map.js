@@ -54,8 +54,15 @@ window.MapManager = {
         // Add cell grid
         this.addCellGrid();
 
+        // Fit map bounds to show all stations and grid beautifully
+        const bounds = L.latLngBounds(this.stations.map(s => [s.lat, s.lng]));
+        this.map.fitBounds(bounds, { padding: [40, 40] });
+
         // Fix map rendering
-        setTimeout(() => this.map.invalidateSize(), 200);
+        setTimeout(() => {
+            this.map.invalidateSize();
+            this.map.fitBounds(bounds, { padding: [40, 40] });
+        }, 200);
     },
 
     /**
@@ -358,6 +365,7 @@ window.MapManager = {
             this.map.removeLayer(this.selectionCircle);
             this.selectionCircle = null;
         }
-        this.map.flyTo(this.center, this.zoom, { duration: 1 });
+        const bounds = L.latLngBounds(this.stations.map(s => [s.lat, s.lng]));
+        this.map.flyToBounds(bounds, { padding: [40, 40], duration: 1 });
     }
 };
