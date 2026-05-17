@@ -419,62 +419,62 @@ window.refreshDemoGrid = function() {
     grid.innerHTML = '';
     window.DemoState.selectedPreset = null;
 
-    const firePath = 'assets/demo-scenarios/fire/';
-    const normalPath = 'assets/demo-scenarios/normal/';
-
-    const fireImages = [
-        'tower_cam_fire.png',
-        'fire_at_distance_in_forest_202605161710.jpeg',
-        'fire_beginning_in_forest_202605161658.jpeg',
-        'fire_in_dense_forest_202605161649.jpeg',
-        'small_fire_in_forest_202605161615.jpeg',
-        'small_fire_in_forest_202605161619.jpeg'
+    const firePresets = [
+        { image: 'assets/images/tower_cam_fire.png', fire: true, temp: 38, wind: 34, hum: 23 },
+        { image: 'assets/demo-scenarios/fire/Fire_at_distance_in_forest_202605161710.jpeg', fire: true, temp: 35, wind: 18, hum: 15 },
+        { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161658.jpeg', fire: true, temp: 42, wind: 22, hum: 12 },
+        { image: 'assets/demo-scenarios/fire/Fire_in_dense_forest_202605161649.jpeg', fire: true, temp: 45, wind: 40, hum: 8 },
+        { image: 'assets/demo-scenarios/fire/Small_fire_in_forest_202605161615.jpeg', fire: true, temp: 32, wind: 15, hum: 25 },
+        { image: 'assets/demo-scenarios/fire/Small_fire_in_forest_202605161619.jpeg', fire: true, temp: 34, wind: 12, hum: 28 },
+        { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161703.jpeg', fire: true, temp: 37, wind: 20, hum: 18 },
+        { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161705.jpeg', fire: true, temp: 39, wind: 25, hum: 14 }
     ];
 
-    const normalImages = [
-        'tower_cam_normal.png',
-        'fog_in_dense_forest_202605161620.jpeg',
-        'fog_in_dense_forest_city_202605161648.jpeg',
-        'image_vu_distance_foret_montagne_202605161658.jpeg',
-        'image_vu_distance_milieu_foret_202605161703.jpeg',
-        'small_town_in_forest_night_202605161618.jpeg'
+    const normalPresets = [
+        { image: 'assets/images/tower_cam_normal.png', fire: false, temp: 22, wind: 10, hum: 55 },
+        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_202605161620.jpeg', fire: false, temp: 18, wind: 8, hum: 90 },
+        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_city_202605161648.jpeg', fire: false, temp: 19, wind: 5, hum: 85 },
+        { image: 'assets/demo-scenarios/normal/image_vu_distance_foret_montagne_202605161658.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
+        { image: 'assets/demo-scenarios/normal/Image_vu_distance_milieu_foret_202605161703.jpeg', fire: false, temp: 21, wind: 15, hum: 50 },
+        { image: 'assets/demo-scenarios/normal/Small_town_in_forest_night_202605161618.jpeg', fire: false, temp: 15, wind: 7, hum: 60 },
+        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_202605161619.jpeg', fire: false, temp: 17, wind: 6, hum: 88 }
     ];
 
-    for (let i = 0; i < 6; i++) {
-        const isFire = Math.random() > 0.5;
-        const imgName = isFire 
-            ? fireImages[Math.floor(Math.random() * fireImages.length)]
-            : normalImages[Math.floor(Math.random() * normalImages.length)];
-        
-        const imgSrc = (isFire ? firePath : normalPath) + imgName;
-        
-        const temp = isFire ? Math.floor(Math.random() * 15 + 32) : Math.floor(Math.random() * 15 + 18);
-        const wind = Math.floor(Math.random() * 45);
-        const hum = isFire ? Math.floor(Math.random() * 20 + 10) : Math.floor(Math.random() * 40 + 35);
+    // Shuffle helper
+    const shuffle = (arr) => arr.sort(() => 0.5 - Math.random());
+    
+    const selectedFires = shuffle([...firePresets]).slice(0, 3);
+    const selectedNormals = shuffle([...normalPresets]).slice(0, 3);
+    
+    // Combine and shuffle the 6 total options
+    const combined = shuffle([...selectedFires, ...selectedNormals]);
 
-        const preset = { id: i, image: imgSrc, fire: isFire, temp, wind, hum };
-
+    combined.forEach((preset, idx) => {
         const cell = document.createElement('div');
         cell.className = 'demo-cell';
-        cell.dataset.id = i;
+        cell.dataset.id = idx;
+        
+        // Match the user object format exactly
+        const finalPresetObj = { id: idx, image: preset.image, fire: preset.fire, temp: preset.temp, wind: preset.wind, hum: preset.hum };
+
         cell.innerHTML = `
-            <img src="${preset.image}" alt="Scenario ${i}">
+            <img src="${finalPresetObj.image}" alt="Scenario ${idx}">
             <div class="demo-cell-info">
-                <span>🌬️ ${preset.wind}</span>
-                <span>🌡️ ${preset.temp}°</span>
-                <span>💧 ${preset.hum}%</span>
+                <span>🌬️ ${finalPresetObj.wind}</span>
+                <span>🌡️ ${finalPresetObj.temp}°</span>
+                <span>💧 ${finalPresetObj.hum}%</span>
             </div>
-            ${isFire ? '<div class="demo-fire-tag">🔥</div>' : ''}
+            ${finalPresetObj.fire ? '<div class="demo-fire-tag">🔥</div>' : ''}
         `;
 
         cell.addEventListener('click', () => {
             document.querySelectorAll('.demo-cell').forEach(c => c.classList.remove('selected'));
             cell.classList.add('selected');
-            window.DemoState.selectedPreset = preset;
+            window.DemoState.selectedPreset = finalPresetObj;
         });
 
         grid.appendChild(cell);
-    }
+    });
 };
 
 /**
