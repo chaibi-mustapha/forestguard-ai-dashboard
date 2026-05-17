@@ -2,12 +2,12 @@
     <!-- Shield with beautiful orange-red gradient -->
     <path d="M256 32L64 96V224C64 352 160 448 256 480C352 448 448 352 448 224V96L256 32Z" fill="url(#logoGrad)"/>
     
-    <!-- Forest (Three Spaced Pine Trees — Pure White) -->
-    <!-- Left Tree (Background — White with opacity) -->
-    <path d="M144 192L120 272H131.2L104 336H136V368H152V336H184L156.8 272H168L144 192Z" fill="#FFFFFF" fill-opacity="0.8"/>
+    <!-- Forest (Three Spaced Pine Trees — Enlarged Sides — Pure White) -->
+    <!-- Left Tree (Background — Enlarged & White with opacity) -->
+    <path d="M144 152L115.2 248H128L99.2 344H131.2V376H156.8V344H188.8L160 248H172.8L144 152Z" fill="#FFFFFF" fill-opacity="0.8"/>
     
-    <!-- Right Tree (Background — White with opacity) -->
-    <path d="M368 192L392 272H380.8L408 336H376V368H360V336H328L355.2 272H344L368 192Z" fill="#FFFFFF" fill-opacity="0.8"/>
+    <!-- Right Tree (Background — Enlarged & White with opacity) -->
+    <path d="M368 152L396.8 248H384L412.8 344H380.8V376H355.2V344H323.2L352 248H339.2L368 152Z" fill="#FFFFFF" fill-opacity="0.8"/>
     
     <!-- Center Tree (Foreground / Taller — Solid White) -->
     <path d="M256 112L224 208H236.8L208 336H243.2V384H268.8V336H304L275.2 208H288L256 112Z" fill="#FFFFFF"/>
