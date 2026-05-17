@@ -9,8 +9,8 @@
     <!-- Right Tree (Background — Enlarged & Solid White) -->
     <path d="M368 152L396.8 248H384L412.8 344H380.8V376H355.2V344H323.2L352 248H339.2L368 152Z" fill="#FFFFFF"/>
     
-    <!-- Center Tree (Foreground / Taller — Solid White) -->
-    <path d="M256 112L224 208H236.8L208 336H243.2V384H268.8V336H304L275.2 208H288L256 112Z" fill="#FFFFFF"/>
+    <!-- Center Tree (Foreground / Taller — Solid White — Height +1px scaled) -->
+    <path d="M256 96L224 208H236.8L208 336H243.2V384H268.8V336H304L275.2 208H288L256 96Z" fill="#FFFFFF"/>
 
     <!-- Gradient definitions -->
     <defs>
