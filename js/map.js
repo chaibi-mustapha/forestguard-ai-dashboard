@@ -177,11 +177,11 @@ window.MapManager = {
      */
     addCellGrid() {
         const gridStyle = {
-            color: 'rgba(255,255,255,0.1)',
-            weight: 1,
-            dashArray: '6,4',
-            fillColor: 'transparent',
-            fillOpacity: 0,
+            color: '#10B981', // Vibrant emerald green to match active antennas
+            weight: 2,        // Clearly visible thickness
+            dashArray: '8,6', // Tech dashed border look
+            fillColor: 'rgba(16, 185, 129, 0.04)', // Subtle tactical green background fill for the cells
+            fillOpacity: 0.1,
             interactive: false
         };
 

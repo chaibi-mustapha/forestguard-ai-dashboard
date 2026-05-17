@@ -155,11 +155,7 @@ function setupEventListeners() {
         });
     }
 
-    // === Gemma button (header) ===
-    const btnGemma = document.getElementById('btn-gemma');
-    if (btnGemma) {
-        btnGemma.addEventListener('click', handleAnalyze);
-    }
+
 
     // === Map Controls ===
     const btnCenter = document.getElementById('btn-center-map');
