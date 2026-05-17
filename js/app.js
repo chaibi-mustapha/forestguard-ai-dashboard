@@ -630,6 +630,11 @@ window.handleStationClick = function(stationId) {
     }
     
     if (typeof MapManager !== 'undefined') MapManager.focusStation(stationId);
+
+    // Automatically trigger Gemma AI analysis instantly!
+    setTimeout(() => {
+        handleAnalyze();
+    }, 150);
 };
 
 // === LAUNCH ===
