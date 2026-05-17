@@ -551,6 +551,11 @@ function handleDemoSend() {
 
     const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     UIManager.addLogEntry(now, '🧪 Demo Mode Activated', 'Manual', `Scenario ${isFire ? 'FIRE' : 'NORMAL'} applied`);
+
+    // Automatically trigger Gemma AI analysis instantly!
+    setTimeout(() => {
+        handleAnalyze();
+    }, 150);
 }
 
 /**
