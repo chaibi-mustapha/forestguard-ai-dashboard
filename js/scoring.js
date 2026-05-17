@@ -76,7 +76,7 @@ const ScoringEngine = {
         } else if (clampedScore < 70) {
             level = 'warning';
             color = '#F59E0B'; // Amber
-            label = 'VIGILANCE';
+            label = 'WARNING';
         } else {
             level = 'danger';
             color = '#EF4444'; // Red

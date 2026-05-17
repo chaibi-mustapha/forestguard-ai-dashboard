@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,28 +40,28 @@
             </div>
             <div class="header-title">
                 <h1>ForestGuard <span class="ai-badge">AI</span></h1>
-                <p class="subtitle">Système de Détection Précoce des Incendies Forestiers</p>
+                <p class="subtitle">Early Forest Fire Detection System</p>
             </div>
         </div>
         <div class="header-center">
             <div class="status-indicator" id="system-status">
                 <span class="pulse-dot active"></span>
-                <span class="status-text">SYSTÈME ACTIF</span>
+                <span class="status-text">SYSTEM ACTIVE</span>
             </div>
             
-            <!-- NEW Header Alert Message -->
+            <!-- Header Alert Message -->
             <div class="header-alert-msg" id="header-alert-msg" style="display:none;">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
-                <span id="header-alert-text">INCENDIE DÉTECTÉ</span>
+                <span id="header-alert-text">FIRE DETECTED</span>
             </div>
 
             <div class="station-count">
                 <span class="count-num" id="active-stations">12</span>
-                <span class="count-label">Stations Actives</span>
+                <span class="count-label">Active Stations</span>
             </div>
             <div class="station-count">
                 <span class="count-num accent" id="alerts-count">0</span>
-                <span class="count-label">Alertes</span>
+                <span class="count-label">Alerts</span>
             </div>
         </div>
         <div class="header-right">
@@ -70,7 +70,7 @@
                 <span class="date"></span>
             </div>
 
-            <button class="btn-icon" id="btn-settings" title="Paramètres">
+            <button class="btn-icon" id="btn-settings" title="Settings">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
             <button class="btn-action" id="btn-demo-mode" style="background: linear-gradient(135deg, #10B981, #059669); margin-left: 8px;">
@@ -91,20 +91,20 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                        <span>CARTE EN DIRECT</span>
+                        <span>LIVE MAP</span>
                     </div>
                     <div class="panel-actions">
-                        <button class="btn-sm" id="btn-center-map" title="Recentrer">RECENTRER</button>
-                        <button class="btn-sm active" id="btn-satellite" title="Vue Satellite">SAT</button>
-                        <button class="btn-sm active" id="btn-grid" title="Afficher Grille">GRILLE</button>
+                        <button class="btn-sm" id="btn-center-map" title="Recenter">RECENTER</button>
+                        <button class="btn-sm active" id="btn-satellite" title="Satellite View">SAT</button>
+                        <button class="btn-sm active" id="btn-grid" title="Show Grid">GRID</button>
                     </div>
                 </div>
                 <div class="map-container" id="map"></div>
                 <!-- Map overlay info -->
                 <div class="map-overlay-info" id="map-overlay" style="display:none;">
-                    <div class="overlay-header">⚠️ ALERTE : INCENDIE DÉTECTÉ !</div>
-                    <div class="overlay-detail"><strong>Localisation :</strong> <span id="overlay-location">Lat 45.123, Lon -122.567</span></div>
-                    <div class="overlay-detail"><strong>Zone Estimée :</strong> <span id="overlay-area">12.5 ha</span></div>
+                    <div class="overlay-header">⚠️ ALERT: FIRE DETECTED!</div>
+                    <div class="overlay-detail"><strong>Location:</strong> <span id="overlay-location">Lat 45.123, Lon -122.567</span></div>
+                    <div class="overlay-detail"><strong>Estimated Area:</strong> <span id="overlay-area">12.5 ha</span></div>
                 </div>
             </section>
 
@@ -114,43 +114,43 @@
                     <div class="tab-buttons">
                         <button class="tab-btn active" data-tab="tab-mesh">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg>
-                            <span>RÉSEAU MESH</span>
+                            <span>MESH NETWORK</span>
                         </button>
                         <button class="tab-btn" data-tab="tab-journal">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                            <span>JOURNAL</span>
+                            <span>LOGS</span>
                         </button>
                     </div>
                     <div class="panel-actions" id="journal-actions" style="display: none;">
-                        <button class="btn-sm" id="btn-clear-log">Effacer</button>
+                        <button class="btn-sm" id="btn-clear-log">Clear</button>
                     </div>
                 </div>
 
-                <!-- Tab 1: Network Mesh (Now default) -->
+                <!-- Tab 1: Network Mesh -->
                 <div class="tab-content active" id="tab-mesh">
                     <div class="network-mini-grid" id="network-grid">
                         <!-- Dynamically filled by JS -->
                     </div>
                 </div>
 
-                <!-- Tab 2: Journal -->
+                <!-- Tab 2: Logs -->
                 <div class="tab-content" id="tab-journal">
                     <div class="log-table-container">
                         <table class="log-table" id="event-log-table">
                             <thead>
                                 <tr>
-                                    <th>HEURE</th>
-                                    <th>ÉVÉNEMENT</th>
-                                    <th>SECTEUR</th>
-                                    <th>DÉTAILS</th>
+                                    <th>TIME</th>
+                                    <th>EVENT</th>
+                                    <th>SECTOR</th>
+                                    <th>DETAILS</th>
                                 </tr>
                             </thead>
                             <tbody id="event-log-body">
                                 <tr class="log-info">
                                     <td>--:--</td>
-                                    <td>🟢 Système Initialisé</td>
+                                    <td>🟢 System Initialized</td>
                                     <td>Global</td>
-                                    <td>Toutes les stations actives</td>
+                                    <td>All stations active</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -166,7 +166,7 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-                        <span>VUE CAMÉRA TOUR</span>
+                        <span>TOWER CAM VIEW</span>
                     </div>
                     <div class="cam-station-selector">
                         <select id="cam-station-select">
@@ -176,26 +176,26 @@
                             <option value="B3">Station B3</option>
                             <option value="C1">Station C1</option>
                         </select>
-                        <span class="cam-live-badge" id="cam-live">● EN DIRECT</span>
+                        <span class="cam-live-badge" id="cam-live">● LIVE</span>
                     </div>
                 </div>
                 <div class="cam-view" id="cam-view">
                     <!-- Placeholder invitation for Demo Mode -->
                     <div id="cam-placeholder" class="cam-placeholder">
                         <div class="placeholder-icon">📡</div>
-                        <p>SYSTÈME EN ATTENTE DE TRANSMISSION</p>
-                        <span class="placeholder-hint">Veuillez cliquer sur le bouton <strong style="color:var(--accent-safe);">MODE DÉMO</strong> en haut à droite pour envoyer des images et paramètres de simulation.</span>
+                        <p>SYSTEM WAITING FOR TRANSMISSION</p>
+                        <span class="placeholder-hint">Please click on the <strong style="color:var(--accent-safe);">DEMO MODE</strong> button at the top right to send simulation images and parameters.</span>
                     </div>
 
-                    <img src="" alt="Vue caméra tour" id="cam-image" class="cam-image" style="display:none;">
+                    <img src="" alt="Tower cam view" id="cam-image" class="cam-image" style="display:none;">
                     
                     <div class="cam-overlay-badge" id="cam-detection-badge" style="display:none;">
-                        <span>🔥 INCENDIE DÉTECTÉ</span>
+                        <span>🔥 FIRE DETECTED</span>
                     </div>
                     <div class="cam-info-bar" id="cam-info-bar" style="display:none;">
                         <span id="cam-timestamp">--:--:--</span>
-                        <span id="cam-station-label">Station A3 — Secteur Nord</span>
-                        <span class="cam-wind" id="cam-wind">Vent : NW 15 km/h</span>
+                        <span id="cam-station-label">Station A3 — North Sector</span>
+                        <span class="cam-wind" id="cam-wind">Wind: NW 15 km/h</span>
                     </div>
                 </div>
             </section>
@@ -205,18 +205,18 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 1 0 0-20z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-                        <span>ANALYSE GEMMA 4 AI</span>
+                        <span>GEMMA 4 AI ANALYSIS</span>
                     </div>
                     <button class="btn-action" id="btn-analyze">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        Analyser
+                        Analyze
                     </button>
                 </div>
                 <div class="gemma-output" id="gemma-output">
                     <div class="gemma-placeholder">
                         <div class="gemma-icon-big">🧠</div>
-                        <p>Cliquez sur <strong>"Analyser"</strong> pour envoyer l'image de la caméra à Gemma 4 AI</p>
-                        <p class="gemma-sub">Le modèle analysera l'image pour détecter fumée, flammes et évaluer le niveau de danger</p>
+                        <p>Click <strong>"Analyze"</strong> to send the camera image to Gemma 4 AI</p>
+                        <p class="gemma-sub">The model will analyze the image to detect smoke and flames, and evaluate the danger level</p>
                     </div>
                 </div>
             </section>
@@ -231,15 +231,15 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        <span>ÉVALUATION DU RISQUE</span>
+                        <span>RISK ASSESSMENT</span>
                     </div>
-                    <span class="sector-badge" id="risk-sector">SECTEUR A3</span>
+                    <span class="sector-badge" id="risk-sector">SECTOR A3</span>
                 </div>
                 <div class="risk-gauge-container">
                     <canvas id="risk-gauge" width="220" height="120"></canvas>
                     <div class="risk-score-display">
                         <span class="risk-score-number" id="risk-score-value">15</span>
-                        <span class="risk-score-label" id="risk-score-label">SÛR</span>
+                        <span class="risk-score-label" id="risk-score-label">SAFE</span>
                     </div>
                 </div>
 
@@ -250,7 +250,7 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
-                        <span>DONNÉES CAPTEURS</span>
+                        <span>SENSOR DATA</span>
                     </div>
                     <span class="sensor-station-label" id="sensor-station">Station A3</span>
                 </div>
@@ -258,15 +258,15 @@
                     <div class="sensor-card">
                         <div class="sensor-icon">🌬️</div>
                         <div class="sensor-info">
-                            <span class="sensor-label">Vent</span>
+                            <span class="sensor-label">Wind</span>
                             <span class="sensor-value" id="s-wind">15 km/h</span>
-                            <span class="sensor-sub" id="s-wind-dir">Direction : NO</span>
+                            <span class="sensor-sub" id="s-wind-dir">Direction: NW</span>
                         </div>
                     </div>
                     <div class="sensor-card">
                         <div class="sensor-icon">🌡️</div>
                         <div class="sensor-info">
-                            <span class="sensor-label">Température</span>
+                            <span class="sensor-label">Temperature</span>
                             <span class="sensor-value" id="s-temp">28°C</span>
                             <span class="sensor-sub" id="s-temp-trend">📈 +2°C/h</span>
                         </div>
@@ -274,7 +274,7 @@
                     <div class="sensor-card">
                         <div class="sensor-icon">💧</div>
                         <div class="sensor-info">
-                            <span class="sensor-label">Humidité</span>
+                            <span class="sensor-label">Humidity</span>
                             <span class="sensor-value" id="s-humidity">45%</span>
                             <span class="sensor-sub" id="s-hum-trend">📉 -5%/h</span>
                         </div>
@@ -282,17 +282,17 @@
                     <div class="sensor-card">
                         <div class="sensor-icon">🌫️</div>
                         <div class="sensor-info">
-                            <span class="sensor-label">Qualité Air</span>
-                            <span class="sensor-value" id="s-air">Bonne</span>
+                            <span class="sensor-label">Air Quality</span>
+                            <span class="sensor-value" id="s-air">Good</span>
                             <span class="sensor-sub" id="s-air-aqi">AQI: 42</span>
                         </div>
                     </div>
                     <div class="sensor-card">
                         <div class="sensor-icon">🔋</div>
                         <div class="sensor-info">
-                            <span class="sensor-label">Batterie</span>
+                            <span class="sensor-label">Battery</span>
                             <span class="sensor-value" id="s-battery">87%</span>
-                            <span class="sensor-sub" id="s-solar">☀️ Solaire OK</span>
+                            <span class="sensor-sub" id="s-solar">☀️ Solar OK</span>
                         </div>
                     </div>
                     <div class="sensor-card">
@@ -300,7 +300,7 @@
                         <div class="sensor-info">
                             <span class="sensor-label">Signal</span>
                             <span class="sensor-value" id="s-signal">Excellent</span>
-                            <span class="sensor-sub" id="s-mesh">Mesh : 4 nœuds</span>
+                            <span class="sensor-sub" id="s-mesh">Mesh: 4 nodes</span>
                         </div>
                     </div>
                 </div>
@@ -311,16 +311,16 @@
                 <div class="panel-header">
                     <div class="panel-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8m-4-4h8"/></svg>
-                        <span>CONTRÔLES CAMÉRA</span>
+                        <span>CAMERA CONTROLS</span>
                     </div>
                 </div>
                 <div class="controls-container">
                     <div class="control-row">
                         <span class="control-label">ZOOM</span>
                         <div class="zoom-btns">
-                            <button class="btn-ctrl" id="zoom-out" title="Dézoomer">−</button>
+                            <button class="btn-ctrl" id="zoom-out" title="Zoom Out">−</button>
                             <span class="zoom-value" id="zoom-level">2.5x</span>
-                            <button class="btn-ctrl" id="zoom-in" title="Zoomer">+</button>
+                            <button class="btn-ctrl" id="zoom-in" title="Zoom In">+</button>
                         </div>
                     </div>
                     <div class="control-grid">
@@ -339,7 +339,7 @@
                             <button class="btn-ptz" id="ptz-up">▲</button>
                             <div class="ptz-mid">
                                 <button class="btn-ptz" id="ptz-left">◀</button>
-                                <button class="btn-ptz center" id="ptz-reset" title="Réinitialiser">●</button>
+                                <button class="btn-ptz center" id="ptz-reset" title="Reset">●</button>
                                 <button class="btn-ptz" id="ptz-right">▶</button>
                             </div>
                             <button class="btn-ptz" id="ptz-down">▼</button>
@@ -354,7 +354,7 @@
     <div class="modal-overlay" id="settings-modal" style="display:none;">
         <div class="modal">
             <div class="modal-header">
-                <h2>⚙️ Configuration Gemma 4 AI Backend</h2>
+                <h2>⚙️ Gemma 4 AI Backend Configuration</h2>
                 <button class="modal-close" id="modal-close">✕</button>
             </div>
             <div class="modal-body">
