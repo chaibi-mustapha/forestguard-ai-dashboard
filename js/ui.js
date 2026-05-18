@@ -177,13 +177,13 @@ window.UIManager = {
 
         if (!response || !response.success || !response.data) {
             panel.innerHTML = `
-                <div class="gemma-empty-state" style="padding: 10px 15px;">
-                    <button class="btn btn-sm" id="btn-retry-analysis" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:6px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary);border-radius:4px;cursor:pointer;transition:all 0.2s;margin-bottom:12px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" onclick="if(window.handleAnalyze){window.handleAnalyze()}">
+                <div class="gemma-empty-state" style="padding: 0px 5px; margin-top: -4px;">
+                    <button class="btn btn-sm" id="btn-retry-analysis" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:6px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary);border-radius:4px;cursor:pointer;transition:all 0.2s;margin-bottom:8px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" onclick="if(window.handleAnalyze){window.handleAnalyze()}">
                         🔄 Retry Analysis
                     </button>
                     
-                    <div style="padding: 10px; background: rgba(255, 107, 53, 0.05); border-left: 3px solid var(--accent-fire); border-radius: 4px; font-size: 11px; text-align: left; color: var(--text-muted); line-height: 1.4; width: 100%; box-sizing: border-box;">
-                        <strong style="color: var(--accent-fire); display: block; margin-bottom: 4px;">💡 Résolution :</strong>
+                    <div style="padding: 8px 10px; background: rgba(255, 107, 53, 0.05); border-left: 3px solid var(--accent-fire); border-radius: 4px; font-size: 10px; text-align: left; color: var(--text-muted); line-height: 1.35; width: 100%; box-sizing: border-box;">
+                        <strong style="color: var(--accent-fire); display: block; margin-bottom: 2px;">💡 Résolution :</strong>
                         1. Vérifiez l'URL de connexion dans les Paramètres (icône ⚙️) en haut à droite.<br/>
                         2. Assurez-vous que le script dans Google Colab est actif et connecté.<br/>
                         3. Si le quota de GPU gratuit Colab est épuisé, utilisez un autre compte Google ou l'alternative Hugging Face.
