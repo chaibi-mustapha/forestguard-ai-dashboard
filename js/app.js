@@ -451,7 +451,9 @@ window.refreshDemoGrid = function() {
         { image: 'assets/demo-scenarios/normal/No_Fire_9.jpeg', fire: false, temp: 19, wind: 5, hum: 85 },
         { image: 'assets/demo-scenarios/normal/No_Fire_10.jpeg', fire: false, temp: 15, wind: 7, hum: 60 },
         { image: 'assets/demo-scenarios/normal/No_Fire_11.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
-        { image: 'assets/demo-scenarios/normal/No_Fire_12.jpeg', fire: false, temp: 15, wind: 7, hum: 60 }
+        { image: 'assets/demo-scenarios/normal/No_Fire_12.jpeg', fire: false, temp: 15, wind: 7, hum: 60 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_13.jpeg', fire: false, temp: 26, wind: 10, hum: 42 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_14.jpeg', fire: false, temp: 24, wind: 12, hum: 45 }
     ];
 
     // Shuffle helper
