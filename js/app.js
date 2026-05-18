@@ -436,7 +436,11 @@ window.refreshDemoGrid = function() {
         { image: 'assets/demo-scenarios/fire/Fire_7.jpeg', fire: true, temp: 36, wind: 19, hum: 16 },
         { image: 'assets/demo-scenarios/fire/Fire_8.jpeg', fire: true, temp: 43, wind: 35, hum: 9 },
         { image: 'assets/demo-scenarios/fire/Fire_9.jpeg', fire: true, temp: 44, wind: 38, hum: 7 },
-        { image: 'assets/demo-scenarios/fire/Fire_10.jpeg', fire: true, temp: 38, wind: 21, hum: 20 }
+        { image: 'assets/demo-scenarios/fire/Fire_10.jpeg', fire: true, temp: 38, wind: 21, hum: 20 },
+        { image: 'assets/demo-scenarios/fire/Fire_11.jpeg', fire: true, temp: 40, wind: 30, hum: 10 },
+        { image: 'assets/demo-scenarios/fire/Fire_12.jpeg', fire: true, temp: 41, wind: 29, hum: 12 },
+        { image: 'assets/demo-scenarios/fire/Fire_13.jpeg', fire: true, temp: 37, wind: 22, hum: 15 },
+        { image: 'assets/demo-scenarios/fire/Fire_14.jpeg', fire: true, temp: 38, wind: 24, hum: 13 }
     ];
 
     const normalPresets = [
@@ -453,7 +457,15 @@ window.refreshDemoGrid = function() {
         { image: 'assets/demo-scenarios/normal/No_Fire_11.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
         { image: 'assets/demo-scenarios/normal/No_Fire_12.jpeg', fire: false, temp: 15, wind: 7, hum: 60 },
         { image: 'assets/demo-scenarios/normal/No_Fire_13.jpeg', fire: false, temp: 26, wind: 10, hum: 42 },
-        { image: 'assets/demo-scenarios/normal/No_Fire_14.jpeg', fire: false, temp: 24, wind: 12, hum: 45 }
+        { image: 'assets/demo-scenarios/normal/No_Fire_14.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_15.jpeg', fire: false, temp: 22, wind: 10, hum: 55 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_16.jpeg', fire: false, temp: 23, wind: 8, hum: 52 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_17.jpeg', fire: false, temp: 21, wind: 9, hum: 58 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_18.jpeg', fire: false, temp: 16, wind: 6, hum: 70 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_19.jpeg', fire: false, temp: 17, wind: 7, hum: 68 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_20.jpeg', fire: false, temp: 15, wind: 5, hum: 75 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_21.jpeg', fire: false, temp: 19, wind: 11, hum: 82 },
+        { image: 'assets/demo-scenarios/normal/No_Fire_22.jpeg', fire: false, temp: 20, wind: 12, hum: 80 }
     ];
 
     // Shuffle helper
