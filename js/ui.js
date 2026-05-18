@@ -185,7 +185,8 @@ window.UIManager = {
                     <div style="padding: 10px; background: rgba(255, 107, 53, 0.05); border-left: 3px solid var(--accent-fire); border-radius: 4px; font-size: 11px; text-align: left; color: var(--text-muted); line-height: 1.4; width: 100%; box-sizing: border-box;">
                         <strong style="color: var(--accent-fire); display: block; margin-bottom: 4px;">💡 Résolution :</strong>
                         1. Vérifiez l'URL de connexion dans les Paramètres (icône ⚙️) en haut à droite.<br/>
-                        2. Assurez-vous que le script dans Google Colab est actif et connecté.
+                        2. Assurez-vous que le script dans Google Colab est actif et connecté.<br/>
+                        3. Si le quota de GPU gratuit Colab est épuisé, utilisez un autre compte Google ou l'alternative Hugging Face.
                     </div>
                 </div>`;
             return;
