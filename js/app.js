@@ -286,6 +286,10 @@ async function handleAnalyze() {
         if (btn) btn.classList.add('loading');
         UIManager.showGemmaLoading();
 
+        // Reset visual alert states while AI analysis is active
+        UIManager.setCamFireDetection(false);
+        UIManager.setAlertMode(false);
+
         const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         UIManager.addLogEntry(now, '🧠 AI Analysis Started', `Station ${window.AppState.selectedStation}`, 'Sending to Hugging Face...', 'info');
 
@@ -527,15 +531,16 @@ function handleDemoSend() {
         camImage.style.display = 'block';
         if (camPlaceholder) camPlaceholder.style.display = 'none';
         if (camInfoBar) camInfoBar.style.display = 'flex';
-        if (camOverlay) camOverlay.style.display = isFire ? 'block' : 'none';
+        if (camOverlay) camOverlay.style.display = 'none'; // Keep hidden until AI analysis completes!
 
         if (window.Simulation) {
             window.Simulation.isPaused = true;
             window.Simulation.currentSensorData = finalSensors;
             UIManager.updateSensors(finalSensors);
             
+            // Calculate a baseline risk score without vision alert before AI runs!
             const score = ScoringEngine.calculate({
-                visionScore: isFire ? 90 : 5,
+                visionScore: 5,
                 windSpeed: finalSensors.windSpeed,
                 temperature: finalSensors.temperature,
                 humidity: finalSensors.humidity
