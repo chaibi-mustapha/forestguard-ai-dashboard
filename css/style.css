@@ -680,7 +680,8 @@ body {
 
 .placeholder-hint {
     font-size: 10.5px;
-    max-width: 90%;
+    width: 95%;
+    max-width: 520px;
     line-height: 1.5;
     color: var(--text-muted);
     background: rgba(255,255,255,0.03);
@@ -1615,4 +1616,41 @@ body {
     .header-center {
         display: none;
     }
+}
+
+/* ============================================
+   PREMIUM LEAFLET MAP ZOOM OVERRIDES
+   ============================================ */
+.leaflet-right .leaflet-control-zoom {
+    margin-right: 16px !important;
+    margin-bottom: 16px !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-bar {
+    border-radius: var(--radius-sm) !important;
+    overflow: hidden;
+}
+
+.leaflet-bar a {
+    background-color: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    width: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    font-size: 14px !important;
+    transition: all 0.2s ease !important;
+}
+
+.leaflet-bar a:hover {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+}
+
+.leaflet-bar a.leaflet-disabled {
+    background-color: rgba(17, 24, 39, 0.5) !important;
+    color: var(--text-muted) !important;
+    opacity: 0.5;
 }
