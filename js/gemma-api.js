@@ -86,8 +86,9 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
                     return result;
                 }
             } catch (e) {
-                console.warn("Colab backend failed or timed out:", e.message);
-                errors.push("Colab GPU: " + e.message);
+                console.warn("Colab backend failed or timed out:", e);
+                const errMsg = e && e.message ? e.message : String(e);
+                errors.push("Colab GPU: " + errMsg);
             }
         }
 
@@ -103,8 +104,9 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
                 return result;
             }
         } catch (e) {
-            console.warn("HF Space failed or timed out:", e.message);
-            errors.push("Hugging Face Space: " + e.message);
+            console.warn("HF Space failed or timed out:", e);
+            const errMsg = e && e.message ? e.message : String(e);
+            errors.push("Hugging Face Space: " + errMsg);
         }
 
         this.isProcessing = false;
