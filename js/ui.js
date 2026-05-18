@@ -177,13 +177,20 @@ window.UIManager = {
 
         if (!response || !response.success || !response.data) {
             panel.innerHTML = `
-                <div class="gemma-empty-state">
-                    <div class="gemma-brain-icon error">⚠️</div>
-                    <p>Analysis Error</p>
-                    <small style="display:block;margin-bottom:12px;max-height:80px;overflow-y:auto;padding:0 5px;">${(response && response.error) || 'Malformed data'}</small>
-                    <button class="btn btn-sm" id="btn-retry-analysis" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:5px 12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary);border-radius:4px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" onclick="if(window.handleAnalyze){window.handleAnalyze()}">
+                <div class="gemma-empty-state" style="padding: 10px 15px;">
+                    <div class="gemma-brain-icon error" style="margin-bottom: 5px;">⚠️</div>
+                    <p style="margin-bottom: 5px; font-weight: 700;">Analysis Error</p>
+                    <small style="display:block;margin-bottom:10px;max-height:60px;overflow-y:auto;padding:0 5px;font-size:10px;color:rgba(255,255,255,0.6);">${(response && response.error) || 'Malformed data'}</small>
+                    
+                    <button class="btn btn-sm" id="btn-retry-analysis" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:6px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary);border-radius:4px;cursor:pointer;transition:all 0.2s;margin-bottom:12px;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" onclick="if(window.handleAnalyze){window.handleAnalyze()}">
                         🔄 Retry Analysis
                     </button>
+                    
+                    <div style="padding: 10px; background: rgba(255, 107, 53, 0.05); border-left: 3px solid var(--accent-fire); border-radius: 4px; font-size: 11px; text-align: left; color: var(--text-muted); line-height: 1.4; width: 100%; box-sizing: border-box;">
+                        <strong style="color: var(--accent-fire); display: block; margin-bottom: 4px;">💡 Résolution :</strong>
+                        1. Vérifiez l'URL de connexion dans les Paramètres (icône ⚙️) en haut à droite.<br/>
+                        2. Assurez-vous que le script dans Google Colab est actif et connecté.
+                    </div>
                 </div>`;
             return;
         }
