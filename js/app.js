@@ -560,18 +560,18 @@ function handleDemoSend() {
  * Mapping for specific station data
  */
 window.StationDataMap = {
-    'A1': { image: 'assets/Reseau Antenne/antenne_1.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'N' },
-    'A2': { image: 'assets/Reseau Antenne/antenne_2.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'NE' },
-    'A3': { image: 'assets/Reseau Antenne/antenne_3.jpeg', wind: 18, temp: 28, hum: 35, windDir: 'NW' },
-    'A4': { image: 'assets/Reseau Antenne/antenne_4.jpeg', wind: 10, temp: 25, hum: 42, windDir: 'N' },
-    'B1': { image: 'assets/Reseau Antenne/antenne_5.jpeg', wind: 14, temp: 27, hum: 38, windDir: 'W' },
-    'B2': { image: 'assets/Reseau Antenne/antenne_6.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
-    'B3': { image: 'assets/Reseau Antenne/antenne_7.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'SE' },
-    'B4': { image: 'assets/Reseau Antenne/antenne_8.jpeg', wind: 18, temp: 28, hum: 35, windDir: 'E' },
-    'C1': { image: 'assets/Reseau Antenne/antenne_9.jpeg', wind: 10, temp: 25, hum: 42, windDir: 'SW' },
-    'C2': { image: 'assets/Reseau Antenne/antenne_10.jpeg', wind: 14, temp: 27, hum: 38, windDir: 'S' },
-    'C3': { image: 'assets/Reseau Antenne/antenne_11.jpeg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
-    'C4': { image: 'assets/Reseau Antenne/antenne_12.jpeg', wind: 15, temp: 26, hum: 40, windDir: 'SE' }
+    'A1': { image: 'assets/Reseau Antenne/antenne_1.jpg', wind: 12, temp: 24, hum: 45, windDir: 'N' },
+    'A2': { image: 'assets/Reseau Antenne/antenne_2.jpg', wind: 15, temp: 26, hum: 40, windDir: 'NE' },
+    'A3': { image: 'assets/Reseau Antenne/antenne_3.jpg', wind: 18, temp: 28, hum: 35, windDir: 'NW' },
+    'A4': { image: 'assets/Reseau Antenne/antenne_4.jpg', wind: 10, temp: 25, hum: 42, windDir: 'N' },
+    'B1': { image: 'assets/Reseau Antenne/antenne_5.jpg', wind: 14, temp: 27, hum: 38, windDir: 'W' },
+    'B2': { image: 'assets/Reseau Antenne/antenne_6.jpg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
+    'B3': { image: 'assets/Reseau Antenne/antenne_7.jpg', wind: 15, temp: 26, hum: 40, windDir: 'SE' },
+    'B4': { image: 'assets/Reseau Antenne/antenne_8.jpg', wind: 18, temp: 28, hum: 35, windDir: 'E' },
+    'C1': { image: 'assets/Reseau Antenne/antenne_9.jpg', wind: 10, temp: 25, hum: 42, windDir: 'SW' },
+    'C2': { image: 'assets/Reseau Antenne/antenne_10.jpg', wind: 14, temp: 27, hum: 38, windDir: 'S' },
+    'C3': { image: 'assets/Reseau Antenne/antenne_11.jpg', wind: 12, temp: 24, hum: 45, windDir: 'S' },
+    'C4': { image: 'assets/Reseau Antenne/antenne_12.jpg', wind: 15, temp: 26, hum: 40, windDir: 'SE' }
 };
 
 /**
