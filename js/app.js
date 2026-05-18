@@ -419,7 +419,6 @@ window.refreshDemoGrid = function() {
     window.DemoState.selectedPreset = null;
 
     const firePresets = [
-        { image: 'assets/images/tower_cam_fire.png', fire: true, temp: 38, wind: 34, hum: 23 },
         { image: 'assets/demo-scenarios/fire/Fire_at_distance_in_forest_202605161710.jpeg', fire: true, temp: 35, wind: 18, hum: 15 },
         { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161658.jpeg', fire: true, temp: 42, wind: 22, hum: 12 },
         { image: 'assets/demo-scenarios/fire/Fire_in_dense_forest_202605161649.jpeg', fire: true, temp: 45, wind: 40, hum: 8 },
@@ -430,7 +429,6 @@ window.refreshDemoGrid = function() {
     ];
 
     const normalPresets = [
-        { image: 'assets/images/tower_cam_normal.png', fire: false, temp: 22, wind: 10, hum: 55 },
         { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_202605161620.jpeg', fire: false, temp: 18, wind: 8, hum: 90 },
         { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_city_202605161648.jpeg', fire: false, temp: 19, wind: 5, hum: 85 },
         { image: 'assets/demo-scenarios/normal/image_vu_distance_foret_montagne_202605161658.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
