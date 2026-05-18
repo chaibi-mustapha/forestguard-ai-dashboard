@@ -132,7 +132,7 @@ For a full hands-on evaluation of our fine-tuned multimodal Gemma 4 model, follo
 2. **Access the Live Dashboard:** Open the **[ForestGuard AI Dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**.
 3. **Connect & Test:** 
    * Click the settings icon (**⚙️**) in the top-right corner of the dashboard.
-   * Paste the Gradio URL (`https://xxxx.gradio.live`) into the **Colab GPU API URL** field and click **Save Settings**.
+   * Paste the Gradio URL (`https://xxxx.gradio.live`) into the **Colab GPU API URL** field and click **Connect**.
    * Click **DEMO MODE** (top-right), select any preset scenario (like *Station A4 - Fire Start*) or **upload your own custom forest image**, and click **SEND DATA TO DASHBOARD**!
    * Click **Analyze** under the camera view. The dashboard will query your live Colab T4 GPU, run multimodal inference with our fine-tuned Gemma 4 E4B model, parse the structured JSON response, and trigger emergency alerts in real-time!
 
