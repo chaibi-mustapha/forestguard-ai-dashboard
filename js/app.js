@@ -286,9 +286,12 @@ async function handleAnalyze() {
         if (btn) btn.classList.add('loading');
         UIManager.showGemmaLoading();
 
-        // Reset visual alert states while AI analysis is active
+        // Reset visual alert states and global AppState while AI analysis is active
+        window.AppState.fireDetected = false;
+        window.AppState.fireStation = null;
         UIManager.setCamFireDetection(false);
         UIManager.setAlertMode(false);
+        UIManager.hideAlertBanner();
 
         const now = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
         UIManager.addLogEntry(now, '🧠 AI Analysis Started', `Station ${window.AppState.selectedStation}`, 'Sending to Hugging Face...', 'info');
