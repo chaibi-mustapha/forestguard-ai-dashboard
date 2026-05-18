@@ -132,10 +132,11 @@ window.MapManager = {
             }).addTo(this.map);
 
             let tooltipContent = `<strong>${s.id}</strong><br>${s.name}`;
-            if (s.id === 'A3') tooltipContent += `<br><span style="color:#ef4444;font-weight:700;">🔥 Incendie de forêt</span>`;
-            else if (s.id === 'C2') tooltipContent += `<br><span style="color:#f59e0b;font-weight:700;">💨 Écobuage / Cabane</span>`;
-            else if (s.id === 'B1' || s.id === 'B2') tooltipContent += `<br><span style="color:#60a5fa;font-weight:700;">🌫️ Brouillard dense</span>`;
-            else tooltipContent += `<br><span style="color:#10b981;font-weight:700;">✅ Conditions claires</span>`;
+            if (s.id === 'A3') tooltipContent += `<br><span style="color:#ef4444;font-weight:700;">🔥 Active Forest Fire</span>`;
+            else if (s.id === 'C2') tooltipContent += `<br><span style="color:#f59e0b;font-weight:700;">💨 Cabin Smoke / Ecobuage</span>`;
+            else if (s.id === 'B1') tooltipContent += `<br><span style="color:#60a5fa;font-weight:700;">🌫️ Dense Forest Fog (Safe)</span>`;
+            else if (s.id === 'B2' || s.id === 'B3') tooltipContent += `<br><span style="color:#a78bfa;font-weight:700;">🌫️ Foggy Forest Town (Safe)</span>`;
+            else tooltipContent += `<br><span style="color:#10b981;font-weight:700;">✅ Clear Conditions (Safe)</span>`;
 
             marker.bindTooltip(tooltipContent, {
                 className: 'station-tooltip',
@@ -235,10 +236,14 @@ window.MapManager = {
                     // Small cabin fire / agricultural ecobuage sector (Orange)
                     currentStyle.color = '#F59E0B';
                     currentStyle.fillColor = 'rgba(245, 158, 11, 0.15)';
-                } else if (id === 'B1' || id === 'B2') {
-                    // Low visibility fog & low fog safe sectors (Blue/Gray)
+                } else if (id === 'B1') {
+                    // Low visibility forest fog (Blue)
                     currentStyle.color = '#60A5FA';
                     currentStyle.fillColor = 'rgba(96, 165, 250, 0.15)';
+                } else if (id === 'B2' || id === 'B3') {
+                    // Valley town fog and low brume (Purple)
+                    currentStyle.color = '#A78BFA';
+                    currentStyle.fillColor = 'rgba(167, 139, 250, 0.15)';
                 }
 
                 cells.push(L.rectangle([[lat1, lng1], [lat2, lng2]], currentStyle));

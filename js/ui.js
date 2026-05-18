@@ -255,20 +255,24 @@ window.UIManager = {
 
         const presets = {
             'C2': {
-                text: '<strong>Station C2 — Sud :</strong> Événement suspect de fumée basse. Scénario de <strong>petit feu de cabane ou écobuage</strong>. Attente classification Gemma 4 (Pas de fausse alerte).',
+                text: '<strong>Station C2 — South Sector:</strong> Low-altitude smoke column detected. Simulated scenario of a <strong>small cabin chimney fire or controlled agricultural ecobuage</strong>. Waiting for Gemma 4 high-fidelity classification (No false alarms).',
                 color: '#f59e0b'
             },
             'A3': {
-                text: '<strong>Station A3 — Nord :</strong> Détection thermique active. Scénario de <strong>feu de forêt majeur en propagation</strong>. Attente déclenchement alarme Gemma 4.',
+                text: '<strong>Station A3 — North Sector:</strong> Active thermal anomaly detected. Simulated scenario of a <strong>major, rapidly spreading forest fire</strong>. Waiting for Gemma 4 to trigger emergency response protocols.',
                 color: '#ef4444'
             },
             'B1': {
-                text: '<strong>Station B1 — Ouest :</strong> Visibilité réduite par <strong>brouillard et brume dense</strong>. Attente validation Gemma 4 (Détection comme SÛR - Pas d\'alarme).',
+                text: '<strong>Station B1 — West Sector (Forest):</strong> Severe low-visibility conditions. Simulated scenario of a <strong>dense fog and low cloud blanket in the deep forest</strong>. Waiting for Gemma 4 validation (Correctly classified as SAFE - No false alarms).',
                 color: '#60a5fa'
             },
             'B2': {
-                text: '<strong>Station B2 — Centre :</strong> Présence de <strong>brume matinale basse</strong>. Attente validation Gemma 4 (Détection comme SÛR - Pas d\'alarme).',
-                color: '#60a5fa'
+                text: '<strong>Station B2 — Center Sector (Town):</strong> Low-hanging valley mist. Simulated scenario of a <strong>foggy forest town with harmless household chimney smoke</strong>. Waiting for Gemma 4 validation (Correctly classified as SAFE - No false alarms).',
+                color: '#a78bfa'
+            },
+            'B3': {
+                text: '<strong>Station B3 — Center Sector (Town):</strong> Low-hanging valley mist. Simulated scenario of a <strong>foggy forest town with harmless household chimney smoke</strong>. Waiting for Gemma 4 validation (Correctly classified as SAFE - No false alarms).',
+                color: '#a78bfa'
             }
         };
 
@@ -280,7 +284,7 @@ window.UIManager = {
         } else {
             overlay.style.display = 'block';
             overlay.style.borderLeftColor = '#10b981';
-            textEl.innerHTML = `<strong>Station ${stationId} :</strong> Surveillance de routine. Conditions météorologiques claires et <strong>environnement sûr (Safe)</strong>.`;
+            textEl.innerHTML = `<strong>Station ${stationId} — Patrol Grid:</strong> Routine surveillance active. Clear weather conditions and <strong>safe environment</strong> (No threats detected).`;
         }
     },
 
