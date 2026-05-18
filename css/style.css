@@ -1160,6 +1160,10 @@ body {
 }
 
 /* === CAMERA CONTROLS === */
+.panel-controls {
+    flex-shrink: 0;
+}
+
 .controls-container {
     padding: 12px;
     display: flex;
