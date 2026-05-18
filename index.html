@@ -166,7 +166,16 @@
                         <span class="cam-live-badge" id="cam-live">● LIVE</span>
                     </div>
                 </div>
-                <div class="cam-view" id="cam-view">
+                <div class="cam-view" id="cam-view" style="position:relative;">
+                    <!-- Scenario HUD overlay card -->
+                    <div id="scenario-hint-overlay" style="position: absolute; top: 15px; left: 15px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255, 255, 255, 0.15); border-left: 4px solid #10b981; border-radius: 6px; padding: 10px 14px; font-size: 11px; color: var(--text-primary); max-width: 280px; backdrop-filter: blur(10px); z-index: 10; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.5); transition: all 0.3s ease;">
+                        <div style="font-weight: 700; color: #818cf8; margin-bottom: 5px; font-family: 'JetBrains Mono', monospace; display: flex; align-items: center; gap: 6px;">
+                            <span style="animation: pulse 2s infinite;">🔬</span> SCÉNARIO ATTENDU (DÉMO)
+                        </div>
+                        <div id="scenario-hint-text" style="line-height: 1.4; color: rgba(255,255,255,0.85); font-family: 'Inter', sans-serif;">
+                            C2: Petit feu de cabane ou écobuage
+                        </div>
+                    </div>
                     <div id="cam-placeholder" class="cam-placeholder">
                         <div class="placeholder-icon">📡</div>
                         <p>SYSTEM WAITING FOR TRANSMISSION</p>

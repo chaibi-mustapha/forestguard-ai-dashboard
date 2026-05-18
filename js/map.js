@@ -131,7 +131,13 @@ window.MapManager = {
                 icon: this.createStationIcon('online')
             }).addTo(this.map);
 
-            marker.bindTooltip(`<strong>${s.id}</strong><br>${s.name}`, {
+            let tooltipContent = `<strong>${s.id}</strong><br>${s.name}`;
+            if (s.id === 'A3') tooltipContent += `<br><span style="color:#ef4444;font-weight:700;">🔥 Incendie de forêt</span>`;
+            else if (s.id === 'C2') tooltipContent += `<br><span style="color:#f59e0b;font-weight:700;">💨 Écobuage / Cabane</span>`;
+            else if (s.id === 'B1' || s.id === 'B2') tooltipContent += `<br><span style="color:#60a5fa;font-weight:700;">🌫️ Brouillard dense</span>`;
+            else tooltipContent += `<br><span style="color:#10b981;font-weight:700;">✅ Conditions claires</span>`;
+
+            marker.bindTooltip(tooltipContent, {
                 className: 'station-tooltip',
                 direction: 'top',
                 offset: [0, -16]
@@ -205,6 +211,12 @@ window.MapManager = {
         const startLat = 43.32;
         const startLng = 2.755;
 
+        const cellIds = [
+            ['A1', 'A2', 'A3', 'A4'],
+            ['B1', 'B2', 'B3', 'B4'],
+            ['C1', 'C2', 'C3', 'C4']
+        ];
+
         for (let r = 0; r < 3; r++) {
             for (let c = 0; c < 4; c++) {
                 const lat1 = startLat - r * latStep;
@@ -212,7 +224,24 @@ window.MapManager = {
                 const lng1 = startLng + c * lngStep;
                 const lng2 = lng1 + lngStep;
 
-                cells.push(L.rectangle([[lat1, lng1], [lat2, lng2]], gridStyle));
+                const id = cellIds[r][c];
+                let currentStyle = { ...gridStyle };
+
+                if (id === 'A3') {
+                    // Active major forest fire sector (Red)
+                    currentStyle.color = '#EF4444';
+                    currentStyle.fillColor = 'rgba(239, 68, 68, 0.15)';
+                } else if (id === 'C2') {
+                    // Small cabin fire / agricultural ecobuage sector (Orange)
+                    currentStyle.color = '#F59E0B';
+                    currentStyle.fillColor = 'rgba(245, 158, 11, 0.15)';
+                } else if (id === 'B1' || id === 'B2') {
+                    // Low visibility fog & low fog safe sectors (Blue/Gray)
+                    currentStyle.color = '#60A5FA';
+                    currentStyle.fillColor = 'rgba(96, 165, 250, 0.15)';
+                }
+
+                cells.push(L.rectangle([[lat1, lng1], [lat2, lng2]], currentStyle));
             }
         }
 

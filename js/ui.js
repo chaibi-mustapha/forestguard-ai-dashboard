@@ -248,6 +248,47 @@ window.UIManager = {
         });
     },
 
+    setScenarioHint(stationId) {
+        const overlay = document.getElementById('scenario-hint-overlay');
+        const textEl = document.getElementById('scenario-hint-text');
+        if (!overlay || !textEl) return;
+
+        const presets = {
+            'C2': {
+                text: '<strong>Station C2 — Sud :</strong> Événement suspect de fumée basse. Scénario de <strong>petit feu de cabane ou écobuage</strong>. Attente classification Gemma 4 (Pas de fausse alerte).',
+                color: '#f59e0b'
+            },
+            'A3': {
+                text: '<strong>Station A3 — Nord :</strong> Détection thermique active. Scénario de <strong>feu de forêt majeur en propagation</strong>. Attente déclenchement alarme Gemma 4.',
+                color: '#ef4444'
+            },
+            'B1': {
+                text: '<strong>Station B1 — Ouest :</strong> Visibilité réduite par <strong>brouillard et brume dense</strong>. Attente validation Gemma 4 (Détection comme SÛR - Pas d\'alarme).',
+                color: '#60a5fa'
+            },
+            'B2': {
+                text: '<strong>Station B2 — Centre :</strong> Présence de <strong>brume matinale basse</strong>. Attente validation Gemma 4 (Détection comme SÛR - Pas d\'alarme).',
+                color: '#60a5fa'
+            }
+        };
+
+        const current = presets[stationId];
+        if (current) {
+            overlay.style.display = 'block';
+            overlay.style.borderLeftColor = current.color;
+            textEl.innerHTML = current.text;
+        } else {
+            overlay.style.display = 'block';
+            overlay.style.borderLeftColor = '#10b981';
+            textEl.innerHTML = `<strong>Station ${stationId} :</strong> Surveillance de routine. Conditions météorologiques claires et <strong>environnement sûr (Safe)</strong>.`;
+        }
+    },
+
+    hideScenarioHint() {
+        const overlay = document.getElementById('scenario-hint-overlay');
+        if (overlay) overlay.style.display = 'none';
+    },
+
     setCamFireDetection(isVisible) {
         const badge = document.getElementById('cam-detection-badge');
         const camImage = document.getElementById('cam-image');

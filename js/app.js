@@ -552,6 +552,8 @@ function handleDemoSend() {
         }
     }
 
+    UIManager.hideScenarioHint();
+
     const modal = document.getElementById('demo-modal');
     if (modal) modal.style.display = 'none';
 
@@ -588,6 +590,7 @@ window.StationDataMap = {
 window.handleStationClick = function(stationId) {
     console.log(`📡 Station Selected: ${stationId}`);
     window.AppState.selectedStation = stationId;
+    UIManager.setScenarioHint(stationId);
     
     const camSelect = document.getElementById('cam-station-select');
     if (camSelect) camSelect.value = stationId;
