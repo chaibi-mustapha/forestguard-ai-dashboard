@@ -433,7 +433,12 @@ window.refreshDemoGrid = function() {
         { image: 'assets/demo-scenarios/fire/Small_fire_in_forest_202605161615.jpeg', fire: true, temp: 32, wind: 15, hum: 25 },
         { image: 'assets/demo-scenarios/fire/Small_fire_in_forest_202605161619.jpeg', fire: true, temp: 34, wind: 12, hum: 28 },
         { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161703.jpeg', fire: true, temp: 37, wind: 20, hum: 18 },
-        { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161705.jpeg', fire: true, temp: 39, wind: 25, hum: 14 }
+        { image: 'assets/demo-scenarios/fire/Fire_beginning_in_forest_202605161705.jpeg', fire: true, temp: 39, wind: 25, hum: 14 },
+        { image: 'assets/demo-scenarios/fire/Feu_milieu_dense_forêt_ville_202605181201.jpeg', fire: true, temp: 41, wind: 28, hum: 11 },
+        { image: 'assets/demo-scenarios/fire/Fire_at_distance_in_forest_202605181153.jpeg', fire: true, temp: 36, wind: 19, hum: 16 },
+        { image: 'assets/demo-scenarios/fire/Fire_in_dense_forest_202605181158.jpeg', fire: true, temp: 43, wind: 35, hum: 9 },
+        { image: 'assets/demo-scenarios/fire/Fire_in_dense_forest_202605181201.jpeg', fire: true, temp: 44, wind: 38, hum: 7 },
+        { image: 'assets/demo-scenarios/fire/génére_une_image_feu_vu_202605181158.jpeg', fire: true, temp: 38, wind: 21, hum: 20 }
     ];
 
     const normalPresets = [
@@ -442,7 +447,13 @@ window.refreshDemoGrid = function() {
         { image: 'assets/demo-scenarios/normal/image_vu_distance_foret_montagne_202605161658.jpeg', fire: false, temp: 24, wind: 12, hum: 45 },
         { image: 'assets/demo-scenarios/normal/Image_vu_distance_milieu_foret_202605161703.jpeg', fire: false, temp: 21, wind: 15, hum: 50 },
         { image: 'assets/demo-scenarios/normal/Small_town_in_forest_night_202605161618.jpeg', fire: false, temp: 15, wind: 7, hum: 60 },
-        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_202605161619.jpeg', fire: false, temp: 17, wind: 6, hum: 88 }
+        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_202605161619.jpeg', fire: false, temp: 17, wind: 6, hum: 88 },
+        { image: 'assets/demo-scenarios/normal/Fog_in_dense_forest_city_202605181159.jpeg', fire: false, temp: 16, wind: 4, hum: 92 },
+        { image: 'assets/demo-scenarios/normal/Image_vu_distance_forêt_montagne_202605181156.jpeg', fire: false, temp: 22, wind: 10, hum: 48 },
+        { image: 'assets/demo-scenarios/normal/Image_vu_distance_forêt_montagne_202605181202.jpeg', fire: false, temp: 23, wind: 11, hum: 46 },
+        { image: 'assets/demo-scenarios/normal/Image_vu_distance_milieu_foret_202605181156.jpeg', fire: false, temp: 20, wind: 14, hum: 52 },
+        { image: 'assets/demo-scenarios/normal/Image_vu_distance_milieu_foret_202605181200.jpeg', fire: false, temp: 21, wind: 13, hum: 51 },
+        { image: 'assets/demo-scenarios/normal/Red_sunset_in_forest_202605181200.jpeg', fire: false, temp: 25, wind: 9, hum: 40 }
     ];
 
     // Shuffle helper
