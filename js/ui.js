@@ -176,7 +176,15 @@ window.UIManager = {
         panel.innerHTML = '';
 
         if (!response || !response.success || !response.data) {
-            panel.innerHTML = `<div class="gemma-empty-state"><div class="gemma-brain-icon error">⚠️</div><p>Analysis Error</p><small>${(response && response.error) || 'Malformed data'}</small></div>`;
+            panel.innerHTML = `
+                <div class="gemma-empty-state">
+                    <div class="gemma-brain-icon error">⚠️</div>
+                    <p>Analysis Error</p>
+                    <small style="display:block;margin-bottom:12px;max-height:80px;overflow-y:auto;padding:0 5px;">${(response && response.error) || 'Malformed data'}</small>
+                    <button class="btn btn-sm" id="btn-retry-analysis" style="display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:5px 12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:var(--text-primary);border-radius:4px;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'" onclick="if(window.handleAnalyze){window.handleAnalyze()}">
+                        🔄 Retry Analysis
+                    </button>
+                </div>`;
             return;
         }
 

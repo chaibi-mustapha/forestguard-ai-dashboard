@@ -102,10 +102,10 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         // Try Colab GPU backend first if configured
         if (this.colabUrl) {
             try {
-                // Set a 150-second timeout for Colab backend to allow for GPU warm-up / cold starts
+                // Set a 300-second timeout for Colab backend to allow for GPU warm-up / cold starts
                 const result = await Promise.race([
                     this.analyzeViaColab(imgElement, sensorData),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout (First cold-start can take up to 2 minutes)")), 150000))
+                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout (First cold-start can take up to 2-3 minutes)")), 300000))
                 ]);
                 if (result.success) {
                     this.isProcessing = false;
@@ -123,10 +123,10 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
 
         // Try Hugging Face Space fallback
         try {
-            // Set a 150-second timeout for HF Space to allow for space wake-up / cold starts
+            // Set a 300-second timeout for HF Space to allow for space wake-up / cold starts
             const result = await Promise.race([
                 this.analyzeViaHFSpace(imgElement, sensorData),
-                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout (First cold-start can take up to 2 minutes)")), 150000))
+                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout (First cold-start can take up to 2-3 minutes)")), 300000))
             ]);
             if (result.success) {
                 this.isProcessing = false;

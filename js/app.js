@@ -279,6 +279,7 @@ function setupEventListeners() {
  * Handle Gemma AI analysis
  */
 async function handleAnalyze() {
+    window.handleAnalyze = handleAnalyze;
     const btn = document.getElementById('btn-analyze');
     
     try {
