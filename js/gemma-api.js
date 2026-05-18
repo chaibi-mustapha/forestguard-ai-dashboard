@@ -120,107 +120,46 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
      * Gradio 5.x REST API: POST /gradio_api/call/predict → GET /gradio_api/call/predict/{event_id}
      */
     async analyzeViaColab(imgElement, sensorData) {
-        console.log("🚀 Sending request to Colab GPU (Gradio)...");
+        console.log("🚀 Sending request to Colab GPU (Gradio Client)...");
         const prompt = this.buildPrompt(sensorData);
         const imageDataUrl = this.imageToBase64(imgElement);
 
-        // Step 1: Submit request to Gradio
-        const submitResponse = await fetch(`${this.colabUrl}/gradio_api/call/predict`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                data: [
-                    { "path": imageDataUrl, "meta": { "_type": "gradio.FileData" } },
-                    prompt
-                ]
-            })
-        });
+        // Dynamically import official Gradio Client
+        const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
+        
+        // Connect to the Gradio app
+        const app = await Client.connect(this.colabUrl);
+        
+        // Convert base64 image data URL into a Blob
+        const response = await fetch(imageDataUrl);
+        const blob = await response.blob();
+        
+        // Predict using endpoint index 0
+        const result = await app.predict(0, [
+            blob,
+            prompt
+        ]);
 
-        if (!submitResponse.ok) {
-            // Try alternative Gradio API format (older versions)
-            return await this.analyzeViaColabLegacy(imgElement, sensorData);
-        }
-
-        const submitResult = await submitResponse.json();
-        const eventId = submitResult.event_id;
-        console.log("Colab request submitted, event_id:", eventId);
-
-        // Step 2: Fetch the result
-        const resultResponse = await fetch(`${this.colabUrl}/gradio_api/call/predict/${eventId}`);
-        if (!resultResponse.ok) {
-            throw new Error(`Colab result fetch failed: ${resultResponse.status}`);
-        }
-
-        const resultText = await resultResponse.text();
-        console.log("Raw Colab response:", resultText);
-
-        // Parse the SSE response
-        const dataLines = resultText.split('\n').filter(line => line.startsWith('data:'));
-        const lastDataLine = dataLines[dataLines.length - 1];
-        const jsonData = JSON.parse(lastDataLine.replace('data: ', ''));
-        const modelOutput = Array.isArray(jsonData) ? jsonData[0] : jsonData;
-
-        console.log("✅ Colab GPU response:", modelOutput);
-        return this.parseModelOutput(modelOutput, 'colab-gpu');
-    },
-
-    /**
-     * Legacy Gradio API format fallback (for older Gradio versions)
-     */
-    async analyzeViaColabLegacy(imgElement, sensorData) {
-        console.log("Trying legacy Gradio API format...");
-        const prompt = this.buildPrompt(sensorData);
-        const imageDataUrl = this.imageToBase64(imgElement);
-
-        const response = await fetch(`${this.colabUrl}/api/predict`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                data: [imageDataUrl, prompt]
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Legacy Gradio API failed: ${response.status}`);
-        }
-
-        const result = await response.json();
+        console.log("✅ Colab GPU response via Gradio Client:", result);
         const modelOutput = Array.isArray(result.data) ? result.data[0] : result.data;
-        console.log("✅ Colab GPU (legacy) response:", modelOutput);
         return this.parseModelOutput(modelOutput, 'colab-gpu');
     },
 
-    /**
-     * Fallback: Call the Hugging Face Space Gradio API
-     */
     async analyzeViaHFSpace(imgElement, sensorData) {
-        console.log("Falling back to HF Space...");
+        console.log("🚀 Falling back to HF Space (Gradio Client)...");
         const prompt = this.buildPrompt(sensorData);
 
-        const submitResponse = await fetch(`${this.spaceUrl}/gradio_api/call/predict`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ data: [prompt] })
-        });
+        // Dynamically import official Gradio Client
+        const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
+        
+        // Connect to the Hugging Face Space
+        const app = await Client.connect(this.spaceUrl);
+        
+        // Predict using endpoint index 0
+        const result = await app.predict(0, [prompt]);
 
-        if (!submitResponse.ok) {
-            throw new Error(`Space submit failed: ${submitResponse.status}`);
-        }
-
-        const submitResult = await submitResponse.json();
-        const eventId = submitResult.event_id;
-
-        const resultResponse = await fetch(`${this.spaceUrl}/gradio_api/call/predict/${eventId}`);
-        if (!resultResponse.ok) {
-            throw new Error(`Space result failed: ${resultResponse.status}`);
-        }
-
-        const resultText = await resultResponse.text();
-        const dataLines = resultText.split('\n').filter(line => line.startsWith('data:'));
-        const lastDataLine = dataLines[dataLines.length - 1];
-        const jsonData = JSON.parse(lastDataLine.replace('data: ', ''));
-        const modelOutput = Array.isArray(jsonData) ? jsonData[0] : jsonData;
-
+        console.log("✅ HF Space response via Gradio Client:", result);
+        const modelOutput = Array.isArray(result.data) ? result.data[0] : result.data;
         return this.parseModelOutput(modelOutput, 'huggingface-space');
     },
 
