@@ -76,10 +76,10 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         // Try Colab GPU backend first if configured
         if (this.colabUrl) {
             try {
-                // Set a 15-second timeout for Colab backend to prevent hanging
+                // Set a 45-second timeout for Colab backend to allow for GPU warm-up
                 const result = await Promise.race([
                     this.analyzeViaColab(imgElement, sensorData),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout")), 15000))
+                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout")), 45000))
                 ]);
                 if (result.success) {
                     this.isProcessing = false;
@@ -87,17 +87,20 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
                 }
             } catch (e) {
                 console.warn("Colab backend failed or timed out:", e);
-                const errMsg = e && e.message ? e.message : String(e);
+                let errMsg = e && e.message ? e.message : String(e);
+                if (errMsg === "[object Object]") {
+                    try { errMsg = JSON.stringify(e); } catch(err) { errMsg = "Connection failed"; }
+                }
                 errors.push("Colab GPU: " + errMsg);
             }
         }
 
         // Try Hugging Face Space fallback
         try {
-            // Set a 15-second timeout for HF Space to prevent hanging
+            // Set a 45-second timeout for HF Space to allow for space wake-up
             const result = await Promise.race([
                 this.analyzeViaHFSpace(imgElement, sensorData),
-                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout")), 15000))
+                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout")), 45000))
             ]);
             if (result.success) {
                 this.isProcessing = false;
@@ -105,7 +108,10 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
             }
         } catch (e) {
             console.warn("HF Space failed or timed out:", e);
-            const errMsg = e && e.message ? e.message : String(e);
+            let errMsg = e && e.message ? e.message : String(e);
+            if (errMsg === "[object Object]") {
+                try { errMsg = JSON.stringify(e); } catch(err) { errMsg = "Space connection failed"; }
+            }
             errors.push("Hugging Face Space: " + errMsg);
         }
 
