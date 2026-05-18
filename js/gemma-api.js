@@ -56,8 +56,34 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
 
     /**
      * Convert an image element to base64 data URL
+     * Handles slow image loading robustly to prevent sending blank/black canvas frames
      */
-    imageToBase64(imgElement) {
+    async imageToBase64(imgElement) {
+        if (!imgElement) return "";
+        
+        // Wait for the image to load completely if it's not complete yet
+        if (!imgElement.complete || imgElement.naturalWidth === 0) {
+            console.log("⏳ Image is loading... waiting for download completion to prevent black frames");
+            await new Promise((resolve) => {
+                const onLoad = () => {
+                    cleanup();
+                    resolve();
+                };
+                const onError = () => {
+                    cleanup();
+                    resolve(); // resolve anyway to try drawing whatever is available
+                };
+                const cleanup = () => {
+                    imgElement.removeEventListener('load', onLoad);
+                    imgElement.removeEventListener('error', onError);
+                };
+                imgElement.addEventListener('load', onLoad);
+                imgElement.addEventListener('error', onError);
+                // Fallback timeout of 2.5 seconds to prevent hanging
+                setTimeout(onLoad, 2500);
+            });
+        }
+
         const canvas = document.createElement('canvas');
         canvas.width = imgElement.naturalWidth || imgElement.width || 512;
         canvas.height = imgElement.naturalHeight || imgElement.height || 512;
@@ -130,7 +156,7 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
     async analyzeViaColab(imgElement, sensorData) {
         console.log("🚀 Sending request to Colab GPU (Gradio Client)...");
         const prompt = this.buildPrompt(sensorData);
-        const imageDataUrl = this.imageToBase64(imgElement);
+        const imageDataUrl = await this.imageToBase64(imgElement);
 
         // Dynamically import official Gradio Client
         const { Client } = await import("https://cdn.jsdelivr.net/npm/@gradio/client/+esm");
