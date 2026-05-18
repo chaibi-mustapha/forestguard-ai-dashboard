@@ -266,16 +266,57 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
         }
 
         // Return raw text response with inferred data
+        const lowerOutput = modelOutput.toLowerCase();
+        
+        let fireDetected = false;
+        const fireDetectedMatch = modelOutput.match(/fire\s*detected\s*:\s*\**(\w+)/i);
+        if (fireDetectedMatch) {
+            const val = fireDetectedMatch[1].toLowerCase();
+            fireDetected = val.startsWith('y') || val === 'yes' || val.includes('true');
+        } else {
+            fireDetected = lowerOutput.includes('fire detected: yes') || 
+                           (lowerOutput.includes('fire') && 
+                            !lowerOutput.includes('no fire') && 
+                            !lowerOutput.includes('fire detected: no') &&
+                            !lowerOutput.includes('fire detected:** no'));
+        }
+
+        let confidence = 0.85;
+        const confidenceMatch = modelOutput.match(/confidence\s*:\s*\**(\d+)%/i);
+        if (confidenceMatch) {
+            confidence = parseFloat(confidenceMatch[1]) / 100;
+        }
+
+        let severity = 'none';
+        const severityMatch = modelOutput.match(/(risk\s*level|severity)\s*:\s*\**(\w+)/i);
+        if (severityMatch) {
+            const val = severityMatch[2].toLowerCase();
+            severity = val.includes('critical') ? 'critical' :
+                       val.includes('high') ? 'high' :
+                       val.includes('medium') ? 'medium' :
+                       val.includes('low') ? 'low' : 'none';
+        } else {
+            severity = lowerOutput.includes('critical') ? 'critical' :
+                       lowerOutput.includes('high') ? 'high' :
+                       lowerOutput.includes('medium') ? 'medium' : 'none';
+        }
+
+        let recommendedAction = '';
+        const actionMatch = modelOutput.match(/recommended\s*action\s*:\s*\**([\s\S]*)/i);
+        if (actionMatch) {
+            recommendedAction = actionMatch[1].trim();
+        } else {
+            recommendedAction = fireDetected ? 'Alert triggered — dispatch team' : 'Continue monitoring';
+        }
+
         return {
             success: true,
             data: {
-                fire_detected: modelOutput.toLowerCase().includes('fire') && !modelOutput.toLowerCase().includes('no fire'),
-                severity: modelOutput.toLowerCase().includes('critical') ? 'critical' :
-                         modelOutput.toLowerCase().includes('high') ? 'high' :
-                         modelOutput.toLowerCase().includes('medium') ? 'medium' : 'none',
-                confidence: 0.85,
+                fire_detected: fireDetected,
+                severity: severity,
+                confidence: confidence,
                 explanation: modelOutput,
-                recommended_action: modelOutput.toLowerCase().includes('fire') ? 'Alert triggered — dispatch team' : 'Continue monitoring'
+                recommended_action: recommendedAction
             },
             raw: modelOutput,
             source
