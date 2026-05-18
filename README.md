@@ -1,53 +1,243 @@
-# 🌲 ForestGuard AI Dashboard
-### Early Forest Fire Detection System Powered by Gemma 4 Edge AI
+# 🌲🔥 ForestGuard AI — Early Wildfire Detection System Powered by Gemma 4
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Gemma 4 Good](https://img.shields.io/badge/Hackathon-Gemma%204%20Good-blueviolet)](https://www.kaggle.com/competitions/gemma-4-good)
-
-**ForestGuard AI** is a state-of-the-art surveillance dashboard designed to combat forest fires through localized Edge AI analysis and a robust mesh network of intelligent antennas.
-
-## 🚀 Key Features
-
-- **🧠 Unified AI Architecture**: Leverages a fine-tuned **Gemma 2-2B** model for real-time visual analysis of forest scenes.
-- **📡 Intelligent Mesh Network**: Simulates a network of 12 surveillance stations (Antennas) transmitting environmental data (Wind, Temp, Humidity) and imagery.
-- **🔥 Real-time Risk Scoring**: A custom scoring engine that combines environmental sensor data with AI vision confidence to predict fire risks.
-- **🗺️ Interactive GIS Mapping**: Real-time localization of alerts using Leaflet.js with dynamic fire propagation visualization.
-- **🧪 Demonstration Mode**: Includes preset scenarios and manual image upload capabilities to test the AI performance across various conditions.
-
-## 🛠️ Technical Stack
-
-- **Frontend**: Vanilla HTML5, CSS3 (Modern Glassmorphism UI), and JavaScript (ES6+).
-- **AI Engine**: Hugging Face Inference API (integrating a custom fine-tuned Gemma 2-2B model).
-- **Mapping**: Leaflet.js for geospatial visualization.
-- **Internationalization**: Fully documented and localized in English for global accessibility.
-
-## 📦 Installation & Setup
-
-Since this is a static web application, no complex installation is required.
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/chaibi-mustapha/forestguard-ai-dashboard.git
-   ```
-2. **Open the Dashboard**:
-   Simply open `index.html` in any modern web browser.
-
-3. **Configure the AI API**:
-   - Click the **Settings (⚙️)** icon in the dashboard header.
-   - Enter your **Hugging Face Read Token** and the **Model ID** (default is set to `chaibi-mustapha/gemma-2-2b-fire-detection`).
-   - Click **Save**.
-
-## 💡 How it Works
-
-1. **Detection**: Surveillance stations capture images and environmental data at the edge.
-2. **Analysis**: The image is sent to the **Gemma 4 AI** model. It analyzes the scene for smoke, flames, or high-risk atmospheric conditions.
-3. **Scoring**: The system calculates a global risk score (0-100%). If the score exceeds a threshold, an automated alert is triggered across the mesh network.
-4. **Alerting**: The dashboard highlights the specific sector, displays AI-generated reasoning, and suggests recommended actions for emergency responders.
-
-## 🏆 Hackathon Context
-
-This project was developed for the **Gemma 4 Good Hackathon** on Kaggle. It demonstrates the power of lightweight, open-source AI models in solving critical environmental challenges while maintaining low power consumption and high reliability in remote forest areas.
+> **An AI-powered distributed surveillance network for ultra-early forest fire detection using Gemma 4 multimodal Edge AI.**
 
 ---
-**Developed by Mustapha Chaibi**
-*Empowering nature through Sovereign Edge AI.*
+
+## 🎯 Problem Statement
+
+**Wildfires are a global crisis.** Every year, over **10 million hectares** of forest are destroyed worldwide, causing:
+- 🌍 **$50+ billion** in damages annually
+- 💨 Massive CO₂ emissions accelerating climate change
+- 🦎 Irreversible biodiversity loss
+- 👥 Thousands of lives endangered
+
+**The core problem:** Current detection systems rely on satellites (hours of delay) or human spotters (limited coverage). By the time a fire is detected, it's often too late.
+
+**Our question:** *What if we could detect a wildfire in its first minutes, not hours?*
+
+---
+
+## 💡 Our Solution: ForestGuard AI
+
+ForestGuard AI is a **distributed Edge AI surveillance network** that deploys intelligent forest monitoring stations capable of detecting wildfires at the earliest stage — when they're still just a wisp of smoke.
+
+### How It Works
+
+```
+📷 High-altitude Camera → 🧠 Gemma 4 (Edge AI) → 📊 Risk Scoring → 🚨 Real-time Alert
+         ↑                         ↑                       ↑
+    🌡️ Sensors            🔥 Fine-tuned with         ⚡ Multi-sensor
+   (wind, temp,             Unsloth LoRA              fusion engine
+    humidity)               on fire dataset
+```
+
+Each station is a **smart sentinel** installed above the forest canopy on high-altitude poles, equipped with:
+- 📷 Long-range panoramic camera
+- 🧠 NVIDIA Jetson Orin Nano running Gemma 4 (GGUF quantized)
+- 🌡️ Environmental sensors (wind, temperature, humidity)
+- 🔋 Solar-powered battery system
+- 📡 Hybrid communication (LoRa / GSM / Satellite mesh network)
+
+---
+
+## 🧠 Gemma 4: The Brain of ForestGuard
+
+### Why Gemma 4?
+Gemma 4 E4B is the perfect model for this application because:
+1. **Natively multimodal** — analyzes camera images + sensor text data simultaneously
+2. **Edge-optimized** — E4B variant designed for IoT/edge deployment on Jetson hardware
+3. **128K context window** — processes complex multi-sensor scenarios
+4. **Apache 2.0 license** — fully deployable in production
+
+### Fine-tuning with Unsloth
+We fine-tuned Gemma 4 E4B using **Unsloth** with LoRA adapters on our custom **forest fire dataset** (4,700+ labeled examples):
+
+```python
+from unsloth import FastVisionModel
+
+model, tokenizer = FastVisionModel.from_pretrained(
+    "google/gemma-4-e4b-it",
+    load_in_4bit=True,
+)
+
+model = FastVisionModel.get_peft_model(
+    model,
+    finetune_vision_layers=True,   # Fine-tune visual understanding
+    finetune_language_layers=True,  # Fine-tune reasoning
+    r=16, target_modules="all-linear",
+)
+```
+
+**Training details:**
+- 📊 Dataset: 4,726 examples (fire/smoke/normal images with structured responses)
+- 🏋️ Method: LoRA (r=16) on vision + language layers
+- ⚙️ Optimizer: AdamW 8-bit, lr=2e-5, cosine scheduler
+- 🔄 Epochs: 1 full epoch with gradient accumulation
+- 💻 Hardware: Kaggle GPU T4 x2
+
+### The "Dual-Prompt" Energy Innovation
+
+Our key architectural innovation is the **Dual-Prompt Strategy** that optimizes battery life on solar-powered stations:
+
+| Mode | Prompt | Tokens | Energy | Frequency |
+|------|--------|--------|--------|-----------|
+| **Fast Scan** | "YES or NO: fire/smoke visible?" | 1 token | ⚡ Minimal | Every 30s |
+| **Deep Analysis** | Full multimodal analysis with sensor fusion | 200+ tokens | 🔋 Full power | Only on alert |
+
+This allows stations to run **24/7 on solar power** while maintaining instant detection capability.
+
+---
+
+## 🖥️ Live Dashboard Demo
+
+**→ [Live Demo: chaibi-mustapha.github.io/forestguard-ai-dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**
+
+Our real-time control center dashboard provides:
+
+### Features:
+- 🗺️ **Interactive satellite map** with 12 monitoring stations in cellular grid
+- 📹 **Live camera feed** with AI overlay (fire zone marking)
+- 📊 **Real-time risk gauge** (0-100 danger score)
+- 🌡️ **Sensor panel** (wind, temperature, humidity, air quality)
+- 🧠 **Gemma 4 AI analysis panel** with structured JSON response
+- 🔔 **Smart alert system** with severity classification
+- 📡 **Mesh network status** showing station connectivity
+- 🎮 **Demo Mode** for interactive testing with fire/non-fire scenarios
+
+### Risk Scoring Algorithm:
+```
+Danger Score = Fire Detection (40%) + Wind Speed (20%) 
+             + Temperature (20%) + Humidity (10%) 
+             + Gemma 4 Confidence (10%)
+
+🟢 0-30: SAFE    🟡 30-70: VIGILANCE    🔴 70-100: ALERT
+```
+
+---
+
+## 🎓 Judges' Evaluation Guide (How to Test)
+
+We have made it incredibly easy for the judges to interactively test and evaluate the entire end-to-end ForestGuard AI system.
+
+### 1. 🎬 Watch the Demo Video (Quick 2-Min Review)
+If you are short on time, watch this 2-minute screen recording showing the live dashboard performing real-time vision-based fire detection powered by our fine-tuned Gemma 4 model:
+👉 **[Watch the Live Demo Video](#)** *(Insert video link here)*
+
+### 2. ⚡ Live Interactive Testing (Run it Yourself in 1 Minute!)
+For a full hands-on evaluation of our fine-tuned multimodal Gemma 4 model, follow these three simple steps:
+
+1. **Launch the GPU Backend:** Open our **[Google Colab Notebook (One-Click Launch)](https://colab.research.google.com/drive/1s8lQJc0u3d9R3j6a_p-w-p_7d3L4_r-C)** *(Make sure to open your Colab notebook, go to Share -> Anyone with link can view, and paste the shareable link here!)*. Make sure you are using a **T4 GPU** runtime, copy all the code from `colab_demo_judges.py` (which is already configured with pre-authenticated access to our Hugging Face repository so you do NOT need any token!), and run the cell. After loading, copy the Gradio public URL displayed at the bottom:
+   `Running on public URL: https://xxxx.gradio.live`
+2. **Access the Live Dashboard:** Open the **[ForestGuard AI Dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**.
+3. **Connect & Test:** 
+   * Click the settings icon (**⚙️**) in the top-right corner of the dashboard.
+   * Paste the Gradio URL (`https://xxxx.gradio.live`) into the **Colab GPU API URL** field and click **Save Settings**.
+   * Click **DEMO MODE** (top-right), select any preset scenario (like *Station A4 - Fire Start*) or **upload your own custom forest image**, and click **SEND DATA TO DASHBOARD**!
+   * Click **Analyze** under the camera view. The dashboard will query your live Colab T4 GPU, run multimodal inference with our fine-tuned Gemma 4 E4B model, parse the structured JSON response, and trigger emergency alerts in real-time!
+
+---
+
+## 🏗️ Technical Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│                 FOREST STATION (Edge)                │
+│                                                     │
+│  📷 Camera ──→ Gemma 4 E4B (Jetson Orin Nano)      │
+│  🌡️ Sensors ──→ Sensor Fusion Engine                │
+│  🔋 Solar + Battery                                 │
+│  📡 LoRa/GSM/Satellite Mesh                         │
+└──────────────────┬──────────────────────────────────┘
+                   │ JSON Alert (lightweight)
+                   ▼
+┌─────────────────────────────────────────────────────┐
+│              CONTROL CENTER (Cloud)                  │
+│                                                     │
+│  🗺️ Real-time Map    📊 Risk Dashboard              │
+│  🔔 Alert System     📈 Historical Analytics        │
+│  👨‍🚒 Emergency Dispatch                              │
+└─────────────────────────────────────────────────────┘
+```
+
+### Technology Stack:
+| Component | Technology |
+|-----------|-----------|
+| AI Model | Gemma 4 E4B (fine-tuned with Unsloth) |
+| Edge Hardware | NVIDIA Jetson Orin Nano |
+| Model Format | GGUF Q4_K_XL (quantized for edge) |
+| Dashboard | HTML5 + JavaScript + Leaflet.js |
+| Hosting | GitHub Pages + HuggingFace Spaces |
+| Communication | LoRa mesh + GSM + Satellite |
+| Power | Solar panels + LiFePO4 batteries |
+
+---
+
+## 📦 Code & Resources
+
+| Resource | Link |
+|----------|------|
+| 🖥️ **Live Dashboard** | [chaibi-mustapha.github.io/forestguard-ai-dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/) |
+| 💻 **GitHub Repository** | [github.com/chaibi-mustapha/forestguard-ai-dashboard](https://github.com/chaibi-mustapha/forestguard-ai-dashboard) |
+| 🧠 **Fine-tuned Model** | [huggingface.co/chaibi-mustapha/gemma-4-e4b-fire-detection](https://huggingface.co/chaibi-mustapha/gemma-4-e4b-fire-detection) |
+| 📊 **Training Dataset** | [kaggle.com/datasets/mustaphachaibi/forest-fire-dataset-full](https://kaggle.com/datasets/mustaphachaibi/forest-fire-dataset-full) |
+| 📓 **Training Notebook** | [Kaggle Notebook — Gemma 4 Fine-tuning with Unsloth](https://www.kaggle.com/code/mustaphachaibi/notebook3474e5a412) |
+
+---
+
+## 🌍 Global Impact & Scalability
+
+### Why This Matters (UN SDGs Alignment):
+- 🌲 **SDG 15 - Life on Land**: Protect forest ecosystems
+- 🌡️ **SDG 13 - Climate Action**: Reduce wildfire CO₂ emissions  
+- 🏙️ **SDG 11 - Sustainable Cities**: Protect communities near forests
+- 🤝 **SDG 17 - Partnerships**: Open-source, deployable worldwide
+
+### Scalability:
+| Metric | Value |
+|--------|-------|
+| Cost per station | ~$500 (vs $50,000+ traditional) |
+| Power | 100% solar (zero grid dependency) |
+| Coverage per station | 5-10 km radius |
+| Network resilience | Mesh topology (no single point of failure) |
+| Deployment regions | Mediterranean, Amazon, Australia, Siberia, California |
+
+### Real-World Deployment Path:
+1. **Phase 1** (2026): Pilot — 12 stations in Mediterranean forest
+2. **Phase 2** (2027): Scale — 100 stations across Southern Europe
+3. **Phase 3** (2028): Global — Open-source hardware plans for worldwide deployment
+
+---
+
+## 🏆 What Makes ForestGuard Unique
+
+| Feature | Traditional Systems | ForestGuard AI |
+|---------|-------------------|----------------|
+| Detection time | Hours (satellite) | **Minutes** (edge AI) |
+| Infrastructure needed | Power grid, internet | **None** (solar + mesh) |
+| AI capability | Basic thresholding | **Gemma 4 multimodal reasoning** |
+| False positive rate | High | **Low** (multi-sensor fusion) |
+| Cost | $50,000+/station | **~$500/station** |
+| Operates offline | ❌ | ✅ **Full edge AI** |
+
+---
+
+## 👤 About the Team
+
+**Mustapha Chaibi** — AI Engineer & Full-Stack Developer
+- Passionate about using AI for environmental protection
+- Experienced in Edge AI deployment and multimodal models
+- Vision: Making wildfire detection accessible and affordable for every forest in the world
+
+---
+
+## 🎬 Video Pitch
+
+[📹 Watch our 2-minute video pitch on YouTube](#)
+<!-- TODO: Add YouTube link after recording -->
+
+---
+
+> *"Every minute counts when a forest is burning. ForestGuard AI gives us those precious minutes back."*
+
+**ForestGuard AI** — Protecting forests with intelligence. 🌲🛡️🔥
