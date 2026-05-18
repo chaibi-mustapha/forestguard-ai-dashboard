@@ -102,10 +102,9 @@ function setupEventListeners() {
         modalClose.addEventListener('click', () => settingsModal.style.display = 'none');
     }
 
-    if (settingsModal) {
-        settingsModal.addEventListener('click', (e) => {
-            if (e.target === settingsModal) settingsModal.style.display = 'none';
-        });
+    const btnCloseSettings = document.getElementById('btn-close-settings');
+    if (btnCloseSettings) {
+        btnCloseSettings.addEventListener('click', () => settingsModal.style.display = 'none');
     }
 
     if (btnSaveSettings) {
