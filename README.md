@@ -14,11 +14,11 @@
 
 **The core problem:** Current detection systems rely on satellites (hours of delay) or human spotters (limited coverage). By the time a fire is detected, it's often too late.
 
-**Our question:** *What if we could detect a wildfire in its first minutes, not hours?*
+**My question:** *What if we could detect a wildfire in its first minutes, not hours?*
 
 ---
 
-## 💡 Our Solution: ForestGuard AI
+## 💡 My Solution: ForestGuard AI
 
 ForestGuard AI is a **distributed Edge AI surveillance network** that deploys intelligent forest monitoring stations capable of detecting wildfires at the earliest stage — when they're still just a wisp of smoke.
 
@@ -51,7 +51,7 @@ Gemma 4 E4B is the perfect model for this application because:
 4. **Apache 2.0 license** — fully deployable in production
 
 ### Fine-tuning with Unsloth
-We fine-tuned Gemma 4 E4B using **Unsloth** with LoRA adapters on our custom **forest fire dataset** (4,700+ labeled examples):
+I fine-tuned Gemma 4 E4B using **Unsloth** with LoRA adapters on my custom **forest fire dataset** (4,700+ labeled examples):
 
 ```python
 from unsloth import FastVisionModel
@@ -76,9 +76,9 @@ model = FastVisionModel.get_peft_model(
 - 🔄 Epochs: 1 full epoch with gradient accumulation
 - 💻 Hardware: Kaggle GPU T4 x2
 
-### The "Dual-Prompt" Energy Innovation
+### My "Dual-Prompt" Energy Innovation
 
-Our key architectural innovation is the **Dual-Prompt Strategy** that optimizes battery life on solar-powered stations:
+My key architectural innovation is the **Dual-Prompt Strategy** that optimizes battery life on solar-powered stations:
 
 | Mode | Prompt | Tokens | Energy | Frequency |
 |------|--------|--------|--------|-----------|
@@ -93,7 +93,7 @@ This allows stations to run **24/7 on solar power** while maintaining instant de
 
 **→ [Live Demo: chaibi-mustapha.github.io/forestguard-ai-dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**
 
-Our real-time control center dashboard provides:
+My real-time control center dashboard provides:
 
 ### Features:
 - 🗺️ **Interactive satellite map** with 12 monitoring stations in cellular grid
@@ -118,29 +118,29 @@ Danger Score = Fire Detection (40%) + Wind Speed (20%)
 
 ## 🎓 Judges' Evaluation Guide (How to Test)
 
-We have made it incredibly easy for the judges to interactively test and evaluate the entire end-to-end ForestGuard AI system.
+I have made it incredibly easy for the judges to interactively test and evaluate the entire end-to-end ForestGuard AI system.
 
 ### 1. 🎬 Watch the Demo Video (Quick 2-Min Review)
-If you are short on time, watch this 2-minute screen recording showing the live dashboard performing real-time vision-based fire detection powered by our fine-tuned Gemma 4 model:
+If you are short on time, watch this 2-minute screen recording showing the live dashboard performing real-time vision-based fire detection powered by my fine-tuned Gemma 4 model:
 👉 **[Watch the Live Demo Video](#)** *(Insert video link here)*
 
 ### 2. ⚡ Live Interactive Testing (Run it Yourself in 1 Minute!)
-For a full hands-on evaluation of our fine-tuned multimodal Gemma 4 model, follow these three simple steps:
+For a full hands-on evaluation of my fine-tuned multimodal Gemma 4 model, follow these three simple steps:
 
-1. **Launch the GPU Backend:** Open our **[Google Colab Notebook (One-Click Launch)](https://colab.research.google.com/drive/1s8lQJc0u3d9R3j6a_p-w-p_7d3L4_r-C)** *(Make sure to open your Colab notebook, go to Share -> Anyone with link can view, and paste the shareable link here!)*. Make sure you are using a **T4 GPU** runtime, copy all the code from `colab_demo_judges.py` (which is already configured with pre-authenticated access to our Hugging Face repository so you do NOT need any token!), and run the cell. After loading, copy the Gradio public URL displayed at the bottom:
+1. **Launch the GPU Backend:** Open my **[Google Colab Notebook (One-Click Launch)](https://colab.research.google.com/drive/1s8lQJc0u3d9R3j6a_p-w-p_7d3L4_r-C)** *(Make sure to open your Colab notebook, go to Share -> Anyone with link can view, and paste the shareable link here!)*. Make sure you are using a **T4 GPU** runtime, copy all the code from `colab_demo_judges.py` (which is already configured with pre-authenticated access to my Hugging Face repository so you do NOT need any token!), and run the cell. After loading, copy the Gradio public URL displayed at the bottom:
    `Running on public URL: https://xxxx.gradio.live`
 2. **Access the Live Dashboard:** Open the **[ForestGuard AI Dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**.
 3. **Connect & Test:** 
    * Click the settings icon (**⚙️**) in the top-right corner of the dashboard.
    * Paste the Gradio URL (`https://xxxx.gradio.live`) into the **Colab GPU API URL** field and click **Connect**.
    * Click **DEMO MODE** (top-right), select any preset scenario (like *Station A4 - Fire Start*) or **upload your own custom forest image**, and click **SEND DATA TO DASHBOARD**!
-   * Click **Analyze** under the camera view. The dashboard will query your live Colab T4 GPU, run multimodal inference with our fine-tuned Gemma 4 E4B model, parse the structured JSON response, and trigger emergency alerts in real-time!
+   * Click **Analyze** under the camera view. The dashboard will query your live Colab T4 GPU, run multimodal inference with my fine-tuned Gemma 4 E4B model, parse the structured JSON response, and trigger emergency alerts in real-time!
 
    > [!NOTE]
    > **💡 Technical Note on GPU Warm-up & Inference Latency:**
    > - **First Inference (Cold Start):** The very first image analysis after launching the Colab notebook takes **18 to 25 seconds**. This is a standard GPU warm-up phase where PyTorch/Unsloth initializes the CUDA kernels, allocates active GPU cache, and prepares the fine-tuned Gemma 4 E4B weights.
    > - **Subsequent Inferences (Hot Start):** Once warmed up, all subsequent image analyses run at full GPU speed and complete in just **3 to 5 seconds**!
-   > - **Robustness Mitigation:** To ensure a seamless hands-on evaluation, we have configured a robust **45-second network timeout** on the frontend (increased from 15s). The dashboard will wait patiently for the GPU warm-up on the first run, guaranteeing a 100% successful evaluation!
+   > - **Robustness Mitigation:** To ensure a seamless hands-on evaluation, I have configured a robust **45-second network timeout** on the frontend (increased from 15s). The dashboard will wait patiently for the GPU warm-up on the first run, guaranteeing a 100% successful evaluation!
 
 ---
 
@@ -228,7 +228,7 @@ For a full hands-on evaluation of our fine-tuned multimodal Gemma 4 model, follo
 
 ---
 
-## 👤 About the Team
+## 👤 About the Author
 
 **Mustapha Chaibi** — AI Engineer & Full-Stack Developer
 - Passionate about using AI for environmental protection
@@ -239,11 +239,11 @@ For a full hands-on evaluation of our fine-tuned multimodal Gemma 4 model, follo
 
 ## 🎬 Video Pitch
 
-[📹 Watch our 2-minute video pitch on YouTube](#)
+[📹 Watch my 2-minute video pitch on YouTube](#)
 <!-- TODO: Add YouTube link after recording -->
 
 ---
 
-> *"Every minute counts when a forest is burning. ForestGuard AI gives us those precious minutes back."*
+> *"Every minute counts when a forest is burning. ForestGuard AI gives those precious minutes back."*
 
 **ForestGuard AI** — Protecting forests with intelligence. 🌲🛡️🔥
