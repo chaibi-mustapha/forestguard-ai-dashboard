@@ -71,14 +71,15 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
      */
     async analyze(imgElement, sensorData) {
         this.isProcessing = true;
+        const errors = [];
 
         // Try Colab GPU backend first if configured
         if (this.colabUrl) {
             try {
-                // Set a 3.5-second timeout for Colab backend to prevent hanging
+                // Set a 15-second timeout for Colab backend to prevent hanging
                 const result = await Promise.race([
                     this.analyzeViaColab(imgElement, sensorData),
-                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout")), 3500))
+                    new Promise((_, reject) => setTimeout(() => reject(new Error("Colab GPU Timeout")), 15000))
                 ]);
                 if (result.success) {
                     this.isProcessing = false;
@@ -86,15 +87,16 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
                 }
             } catch (e) {
                 console.warn("Colab backend failed or timed out:", e.message);
+                errors.push("Colab GPU: " + e.message);
             }
         }
 
         // Try Hugging Face Space fallback
         try {
-            // Set a 3.5-second timeout for HF Space to prevent hanging
+            // Set a 15-second timeout for HF Space to prevent hanging
             const result = await Promise.race([
                 this.analyzeViaHFSpace(imgElement, sensorData),
-                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout")), 3500))
+                new Promise((_, reject) => setTimeout(() => reject(new Error("HF Space Timeout")), 15000))
             ]);
             if (result.success) {
                 this.isProcessing = false;
@@ -102,18 +104,15 @@ Analyze the image carefully. Distinguish smoke vs. clouds, real fire vs. reflect
             }
         } catch (e) {
             console.warn("HF Space failed or timed out:", e.message);
+            errors.push("Hugging Face Space: " + e.message);
         }
 
-        // Ultimate high-fidelity local mock fallback: guarantees zero UI hangs and a stunning live demo!
-        try {
-            const result = await this.analyzeMock(imgElement, sensorData);
-            this.isProcessing = false;
-            return result;
-        } catch (e) {
-            console.error("All backends and local fallback failed:", e);
-            this.isProcessing = false;
-            return { success: false, error: e.message, source: 'error' };
-        }
+        this.isProcessing = false;
+        return {
+            success: false,
+            error: "Toutes les connexions à l'IA réelle Gemma 4 ont échoué.\nDétails des erreurs:\n- " + errors.join('\n- '),
+            source: 'error'
+        };
     },
 
     /**
