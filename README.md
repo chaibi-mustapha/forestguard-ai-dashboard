@@ -127,7 +127,7 @@ If you are short on time, watch this 2-minute screen recording showing the live 
 ### 2. ⚡ Live Interactive Testing (Run it Yourself in 1 Minute!)
 For a full hands-on evaluation of my fine-tuned multimodal Gemma 4 model, follow these three simple steps:
 
-1. **Launch the GPU Backend:** Open my **[Google Colab Notebook (One-Click Launch)](https://colab.research.google.com/drive/1s8lQJc0u3d9R3j6a_p-w-p_7d3L4_r-C)** *(Make sure to open your Colab notebook, go to Share -> Anyone with link can view, and paste the shareable link here!)*. Make sure you are using a **T4 GPU** runtime, copy all the code from `colab_demo_judges.py` (which is already configured with pre-authenticated access to my Hugging Face repository so you do NOT need any token!), and run the cell. After loading, copy the Gradio public URL displayed at the bottom:
+1. **Launch the GPU Backend:** Open my **[Google Colab Live GPU Server (One-Click Launch)](https://colab.research.google.com/drive/1Q3WmHOqtDLUMuQM9rrrtA5-dd9_TTbjo)**. Make sure you are using a **T4 GPU** runtime, copy all the code from `colab_demo_judges.py` (which is already configured with pre-authenticated access to my Hugging Face repository so you do NOT need any token!), and run the cell. After loading, copy the Gradio public URL displayed at the bottom:
    `Running on public URL: https://xxxx.gradio.live`
 2. **Access the Live Dashboard:** Open the **[ForestGuard AI Dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/)**.
 3. **Connect & Test:** 
@@ -185,6 +185,7 @@ For a full hands-on evaluation of my fine-tuned multimodal Gemma 4 model, follow
 |----------|------|
 | 🖥️ **Live Dashboard** | [chaibi-mustapha.github.io/forestguard-ai-dashboard](https://chaibi-mustapha.github.io/forestguard-ai-dashboard/) |
 | 💻 **GitHub Repository** | [github.com/chaibi-mustapha/forestguard-ai-dashboard](https://github.com/chaibi-mustapha/forestguard-ai-dashboard) |
+| ⚡ **Live GPU Server** | [Google Colab Live GPU Server](https://colab.research.google.com/drive/1Q3WmHOqtDLUMuQM9rrrtA5-dd9_TTbjo) |
 | 🧠 **Fine-tuned Model** | [huggingface.co/chaibi-mustapha/gemma-4-e4b-fire-detection](https://huggingface.co/chaibi-mustapha/gemma-4-e4b-fire-detection) |
 | 📊 **Training Dataset** | [kaggle.com/datasets/mustaphachaibi/forest-fire-dataset-full](https://kaggle.com/datasets/mustaphachaibi/forest-fire-dataset-full) |
 | 📓 **Training Notebook** | [Kaggle Notebook — Gemma 4 Fine-tuning with Unsloth](https://www.kaggle.com/code/mustaphachaibi/notebook3474e5a412) |
