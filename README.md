@@ -122,7 +122,7 @@ I have made it incredibly easy for the judges to interactively test and evaluate
 
 ### 1. 🎬 Watch the Demo Video (Quick 2-Min Review)
 If you are short on time, watch this 2-minute screen recording showing the live dashboard performing real-time vision-based fire detection powered by my fine-tuned Gemma 4 model:
-👉 **[Watch the Live Demo Video](#)** *(Insert video link here)*
+👉 **[Watch the Live Demo Video on YouTube](https://www.youtube.com/watch?v=8_dnq1yRBR8)** 🎬
 
 ### 2. ⚡ Live Interactive Testing (Run it Yourself in 1 Minute!)
 For a full hands-on evaluation of my fine-tuned multimodal Gemma 4 model, follow these three simple steps:
@@ -240,7 +240,7 @@ For a full hands-on evaluation of my fine-tuned multimodal Gemma 4 model, follow
 
 ## 🎬 Video Pitch
 
-[📹 Watch my 2-minute video pitch on YouTube](#)
+[📹 Watch my 2-minute video pitch on YouTube](https://www.youtube.com/watch?v=8_dnq1yRBR8)
 <!-- TODO: Add YouTube link after recording -->
 
 ---
